@@ -1,6 +1,7 @@
 body, html {
     background: #222;
     font-family: "Open Sans", sans-serif;
+    line-height: 1.3;
 }
 
 div.text {

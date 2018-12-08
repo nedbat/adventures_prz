@@ -18,7 +18,7 @@ from cogutil import *
 ]]]-->
 <!--[[[end]]]-->
 <head>
-<title>Prez Title</title>
+<title>Adventures</title>
 <meta charset="utf-8" />
 
     <!-- *** Includes {{{ -->
@@ -50,6 +50,9 @@ from cogutil import *
 
     <!-- *** Custom style for this deck {{{ -->
     <style type="text/css">
+    .slide pre {
+        line-height: 1.25;
+    }
     </style>
     <!-- }}} -->
 
@@ -58,7 +61,7 @@ from cogutil import *
 <body class="slides">
 
 <div class="slide title" data-layout="clean">
-    <h1>Prez Title</h1>
+    <h1>Advent-ures</h1>
     <h2>
         Ned Batchelder<br/>
         <a class="implicit" href="http://twitter.com/nedbat">@nedbat</a>
@@ -79,19 +82,46 @@ from cogutil import *
 
 
 <div class="slide">
-    <h1>Important Point!</h1>
+    <h1>Advent of Code</h1>
     <ul>
-    <li class="incremental">One</li>
-    <li class="incremental">Two
-        <ul>
-        <li>sub-point</li>
-        <li>another detail</li>
-        </ul>
-    </li>
-    <li class="incremental">Three</li>
+    <li class="incremental">http://adventofcode.com</li>
     </ul>
 </div>
 
+
+<div class="slide">
+    <h1>The problem</h1>
+    <pre>
+    <span class="incremental">hash('foo1') -> a1b2c3d4</span>
+    <span class="incremental">hash('foo2') -> 9a8b7c6d</span>
+    <span class="incremental">hash('foo3') -> ff0ee1dd</span>
+    <span class="incremental">hash('foo4') -> a1bbb3d4   # Triple b!</span>
+    </pre>
+</div>
+
+<div class="slide">
+    <h1>Hashing</h1>
+    <!--[[[cog include_file("naive.py", start=5, end=7, start_has="def salted_hash", end_has="return")   ]]] {{{ -->
+    <pre class='python'>
+    def salted_hash(salt, i):
+        bytes = f"{salt}{i}".encode("ascii")
+        return hashlib.md5(bytes).hexdigest()
+    </pre>
+    <!--[[[end]]] }}} -->
+</div>
+
+<div class="slide">
+    <h1>Finding triples</h1>
+    <!--[[[cog include_file("naive.py", start=9, end=13, start_has="def triple", end_has="return")   ]]] {{{ -->
+    <pre class='python'>
+    def triple(s):
+        """Return the character that occurs as a triple, or None."""
+        m = re.search(r"(.)\1\1", s)
+        if m:
+            return m.group(1)
+    </pre>
+    <!--[[[end]]] }}} -->
+</div>
 
 <div class="slide section" data-layout="clean">
     <h1><label>A section</label> Section The First</h1>

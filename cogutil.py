@@ -19,7 +19,15 @@ def clip_long_boring_line(s, l):
     return s
 
 
-def include_file(fname, start=None, end=None, highlight=None, section=None, px=False, classes=""):
+def include_file(
+        fname,
+        start=None, end=None,
+        start_has=None, end_has=None,
+        highlight=None,
+        section=None,
+        px=False,
+        classes=""
+    ):
     """Include a text file.
 
     `fname` is read as text, and included in a <pre> tag.
@@ -27,6 +35,8 @@ def include_file(fname, start=None, end=None, highlight=None, section=None, px=F
     `highlight` is a list of lines to highlight.
 
     `start` and `end` are the first and last line numbers to show, if provided.
+    `start_has` is text that must appear in the start line, to check that the
+    file hasn't changed. Similarly for `end_has`.
 
     `section` is a named section.  If provided, a marked section in the file is extracted
     for display.  Markers for section foobar are "(((foobar))" and "(((end)))".
@@ -54,6 +64,15 @@ def include_file(fname, start=None, end=None, highlight=None, section=None, px=F
             start = 1
         if end is None:
             end = len(lines)
+
+    if start_has:
+        start_line = lines[start-1]
+        if start_has not in start_line:
+            raise Exception("Didn't find {!r} in the start line: {}:{} {!r}".format(start_has, fname, start, start_line))
+    if end_has:
+        end_line = lines[end-1]
+        if end_has not in end_line:
+            raise Exception("Didn't find {!r} in the end line: {}:{} {!r}".format(end_has, fname, end, end_line))
 
     # Take only the lines we want, and shorten lines that are too long and
     # easily shortened.
