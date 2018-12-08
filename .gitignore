@@ -1,0 +1,7 @@
+*.pyc
+.DS_Store
+png
+*.out
+*.px
+!px_template.px
+*.zip
