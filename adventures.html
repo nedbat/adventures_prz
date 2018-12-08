@@ -104,7 +104,7 @@ from cogutil import *
 
 <div class="slide fadeout">
     <h1>For example</h1>
-    <pre class="clear">
+    <pre class="clear python">
     <span>seed = 'foo'</span>
     <span class="incremental">md5('foo1') &rarr; a1b2c3d4</span>
     <span class="incremental">md5('foo2') &rarr; 9a8b7c6d</span>
@@ -121,7 +121,7 @@ from cogutil import *
 
 <div class="slide fadein fadeout">
     <h1>Keep looking</h1>
-    <pre class="clear">
+    <pre class="clear python">
     <span>seed = 'foo'</span>
     <span class="xncremental">md5('foo1') &rarr; a1b2c3d4</span>
     <span class="xncremental">md5('foo2') &rarr; 9a8b7c6d</span>
@@ -139,7 +139,7 @@ from cogutil import *
 
 <div class="slide fadein">
     <h1>Keep looking</h1>
-    <pre class="clear">
+    <pre class="clear python">
     <span>seed = 'foo'</span>
     <span class="xncremental">md5('foo1') &rarr; a1b2c3d4</span>
     <span class="xncremental">md5('foo2') &rarr; 9a8b7c6d</span>
@@ -151,7 +151,7 @@ from cogutil import *
     <span class="incremental">md5('foo8') &rarr; c1bd8e78</span>
     <span class="incremental">md5('foo9') &rarr; d8a9112f</span>
     <span class="incremental">...</span>
-    <span class="incremental">until we find 64 keys</span>
+    <span class="incremental">... until we find the 64th key</span>
     </pre>
 </div>
 
@@ -171,7 +171,7 @@ from cogutil import *
     <!--[[[cog include_file("naive.py", start_from="def triple", end_at="return")   ]]] {{{ -->
     <pre class='python'>
     def triple(s):
-        """Return the character that occurs as a triple, or None."""
+        """Return a triple character, or None."""
         m = re.search(r"(.)\1\1", s)
         if m:
             return m.group(1)
@@ -179,69 +179,11 @@ from cogutil import *
     <!--[[[end]]] }}} -->
 </div>
 
+<!--
 <div class="slide section" data-layout="clean">
     <h1><label>A section</label> Section The First</h1>
 </div>
-
-<div class="slide">
-    <h1>Some code</h1>
-    <pre class="python">
-    def fib(n):
-        if n < 2:
-            return 1
-        else:
-            return fib(n-1) + fib(n-2)
-    </pre>
-</div>
-
-
-<div class="slide">
-    <h1>Included code</h1>
-    <!--[[[cog include_file("sample.py") ]]] {{{ -->
-    <pre class='python'>
-    def f(n):
-        print("Look!: {}".format(n))
-        if n &gt; 0:
-            f(n-1)
-
-    f(4)
-    </pre>
-    <!--[[[end]]] }}}-->
-    <!--[[[cog include_file("sample.out") ]]] {{{ -->
-    <pre class='text'>
-    Look!: 4
-    Look!: 3
-    Look!: 2
-    Look!: 1
-    Look!: 0
-    </pre>
-    <!--[[[end]]] }}}-->
-</div>
-
-
-<div class="slide">
-    <h1>Smaller code</h1>
-    <!--[[[cog include_file("sample.py", classes="small") ]]] {{{ -->
-    <pre class='small python'>
-    def f(n):
-        print("Look!: {}".format(n))
-        if n &gt; 0:
-            f(n-1)
-
-    f(4)
-    </pre>
-    <!--[[[end]]] }}}-->
-    <!--[[[cog include_file("sample.out", classes="small") ]]] {{{ -->
-    <pre class='small text'>
-    Look!: 4
-    Look!: 3
-    Look!: 2
-    Look!: 1
-    Look!: 0
-    </pre>
-    <!--[[[end]]] }}}-->
-</div>
-
+-->
 
 <div class="slide title" data-layout="clean">
     <h1 style="padding-top: 0em">Questions?</h1>

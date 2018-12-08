@@ -9,9 +9,9 @@ VENDOR = slippy highlight
 
 .PHONY: $(SLIDE_HTML)
 
-SAMPLES = sample.py
+SAMPLES =
 
-OUTPUT = sample.out
+OUTPUT =
 
 slides: $(SLIDE_HTML)
 

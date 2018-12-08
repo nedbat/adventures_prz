@@ -7,7 +7,7 @@ def salted_hash(salt, i):
     return hashlib.md5(bytes).hexdigest()
 
 def triple(s):
-    """Return the character that occurs as a triple, or None."""
+    """Return a triple character, or None."""
     m = re.search(r"(.)\1\1", s)
     if m:
         return m.group(1)
