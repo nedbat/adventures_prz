@@ -88,37 +88,70 @@ from cogutil import *
     </ul>
 </div>
 
-
 <div class="slide">
-    <h1>The problem</h1>
-    <pre>
-    <span class="incremental">md5('foo1') -> a1b2c3d4</span>
-    <span class="incremental">md5('foo2') -> 9a8b7c6d</span>
-    <span class="incremental">md5('foo3') -> ff0ee1dd</span>
-    <span class="incremental">md5('foo4') -> a1<u><b>bbb</b></u>3d4    # Triple b!</span>
-    <span class="incremental">                           md5('foo5') -> 987abc65</span>
-    <span class="incremental">                           md5('foo6') -> a32cac67</span>
-    <span class="incremental">                           md5('foo7') -> 4e60f111</span>
+    <h1>12/14/2016</h1>
+    <ul>
+    <li class="incremental">"Santa's one-time cryptography pad"</li>
+    <li class="incremental">Given a seed</li>
+    <li class="incremental">Find numbers where:
+        <ul>
+        <li class="incremental">md5(seed + num) has a <b>3x</b> char</li>
+        <li class="incremental">one of the next 1000 numbers has that char <b>5x</b></li>
+        </ul>
+    </ul>
+</div>
+
+
+<div class="slide fadeout">
+    <h1>For example</h1>
+    <pre class="clear">
+    <span>seed = 'foo'</span>
+    <span class="incremental">md5('foo1') &rarr; a1b2c3d4</span>
+    <span class="incremental">md5('foo2') &rarr; 9a8b7c6d</span>
+    <span class="incremental">md5('foo3') &rarr; ff0ee1dd</span>
+    <span class="incremental">md5('foo4') &rarr; a1<u><b>bbb</b></u>3d4     # Triple b!</span>
+    <span class="incremental">                           md5('foo5') &rarr; 987abc65</span>
+    <span class="incremental">                           md5('foo6') &rarr; a32cac67</span>
+    <span class="incremental">                           md5('foo7') &rarr; 4e60f111</span>
     <span class="incremental">                           ...</span>
-    <span class="incremental">                           md5('foo241') -> 00<u><b>bbbbb</b></u>0</span>
+    <span class="incremental">                           md5('foo241') &rarr; 3a<u><b>bbbbb</b></u>0</span>
     <span class="incremental">                           4 is a key!</span>
     </pre>
 </div>
 
-<div class="slide">
-    <h1>The problem</h1>
-    <pre>
-    <span class="xncremental">md5('foo1') -> a1b2c3d4</span>
-    <span class="xncremental">md5('foo2') -> 9a8b7c6d</span>
-    <span class="xncremental">md5('foo3') -> ff0ee1dd</span>
-    <span class="xncremental">md5('foo4') -> a1bbb3d4</span>
-    <span class="incremental">md5('foo5') -> 987abc65</span>
-    <span class="incremental">md5('foo6') -> a32cac67</span>
-    <span class="incremental">md5('foo7') -> 4e60f<u>111</u>    # Triple 1!</span>
-    <span class="incremental">                           md5('foo8') -> c1bd8e78</span>
+<div class="slide fadein fadeout">
+    <h1>Keep looking</h1>
+    <pre class="clear">
+    <span>seed = 'foo'</span>
+    <span class="xncremental">md5('foo1') &rarr; a1b2c3d4</span>
+    <span class="xncremental">md5('foo2') &rarr; 9a8b7c6d</span>
+    <span class="xncremental">md5('foo3') &rarr; ff0ee1dd</span>
+    <span class="xncremental">md5('foo4') &rarr; a1bbb3d4</span>
+    <span class="incremental">md5('foo5') &rarr; 987abc65</span>
+    <span class="incremental">md5('foo6') &rarr; a32cac67</span>
+    <span class="incremental">md5('foo7') &rarr; 4e60f<u>111</u>     # Triple 1!</span>
+    <span class="incremental">                           md5('foo8') &rarr; c1bd8e78</span>
     <span class="incremental">                           ...</span>
-    <span class="incremental">                           md5('foo1007') -> f5e02b34</span>
+    <span class="incremental">                           md5('foo1007') &rarr; f5e02b34</span>
     <span class="incremental">                           7 is not a key....</span>
+    </pre>
+</div>
+
+<div class="slide fadein">
+    <h1>Keep looking</h1>
+    <pre class="clear">
+    <span>seed = 'foo'</span>
+    <span class="xncremental">md5('foo1') &rarr; a1b2c3d4</span>
+    <span class="xncremental">md5('foo2') &rarr; 9a8b7c6d</span>
+    <span class="xncremental">md5('foo3') &rarr; ff0ee1dd</span>
+    <span class="xncremental">md5('foo4') &rarr; a1bbb3d4</span>
+    <span class="xncremental">md5('foo5') &rarr; 987abc65</span>
+    <span class="xncremental">md5('foo6') &rarr; a32cac67</span>
+    <span class="xncremental">md5('foo7') &rarr; 4e60f111</span>
+    <span class="incremental">md5('foo8') &rarr; c1bd8e78</span>
+    <span class="incremental">md5('foo9') &rarr; d8a9112f</span>
+    <span class="incremental">...</span>
+    <span class="incremental">until we find 64 keys</span>
     </pre>
 </div>
 

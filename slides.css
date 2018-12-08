@@ -119,6 +119,14 @@ img.icon {
     font-family: Consolas, monaco, monospace;
 }
 
+.slide pre.clear {
+    background: none;
+}
+
+.slide pre.clear.python {
+    background: none;
+}
+
 .slide pre.medium {
     font-size: 85%;
 }
