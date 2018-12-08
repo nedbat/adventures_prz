@@ -23,6 +23,7 @@ def include_file(
         fname,
         start=None, end=None,
         start_has=None, end_has=None,
+        start_from=None, end_at=None,
         highlight=None,
         section=None,
         px=False,
@@ -38,6 +39,9 @@ def include_file(
     `start_has` is text that must appear in the start line, to check that the
     file hasn't changed. Similarly for `end_has`.
 
+    `start_from` and `end_at` are substrings of the first and last lines to
+    show.
+
     `section` is a named section.  If provided, a marked section in the file is extracted
     for display.  Markers for section foobar are "(((foobar))" and "(((end)))".
 
@@ -51,14 +55,18 @@ def include_file(
 
     lines = text.splitlines()
     if section:
+        assert start_from is None
+        assert end_at is None
+        start_from = "(((" + section + ")))"
+        end_at = "(((end)))"
+    if start_from and end_at:
         assert start is None
         assert end is None
-        start_marker = "(((" + section + ")))"
-        end_marker = "(((end)))"
-        start = next(i for i, l in enumerate(lines, 1) if start_marker in l)
-        end = next(i for i, l in enumerate(lines[start:], start+1) if end_marker in l)
-        start += 1
-        end -= 1
+        start = next(i for i, l in enumerate(lines, 1) if start_from in l)
+        end = next(i for i, l in enumerate(lines[start:], start+1) if end_at in l)
+        if section:
+            start += 1
+            end -= 1
     else:
         if start is None:
             start = 1

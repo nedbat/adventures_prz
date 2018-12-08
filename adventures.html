@@ -92,16 +92,39 @@ from cogutil import *
 <div class="slide">
     <h1>The problem</h1>
     <pre>
-    <span class="incremental">hash('foo1') -> a1b2c3d4</span>
-    <span class="incremental">hash('foo2') -> 9a8b7c6d</span>
-    <span class="incremental">hash('foo3') -> ff0ee1dd</span>
-    <span class="incremental">hash('foo4') -> a1bbb3d4   # Triple b!</span>
+    <span class="incremental">md5('foo1') -> a1b2c3d4</span>
+    <span class="incremental">md5('foo2') -> 9a8b7c6d</span>
+    <span class="incremental">md5('foo3') -> ff0ee1dd</span>
+    <span class="incremental">md5('foo4') -> a1<u><b>bbb</b></u>3d4    # Triple b!</span>
+    <span class="incremental">                           md5('foo5') -> 987abc65</span>
+    <span class="incremental">                           md5('foo6') -> a32cac67</span>
+    <span class="incremental">                           md5('foo7') -> 4e60f111</span>
+    <span class="incremental">                           ...</span>
+    <span class="incremental">                           md5('foo241') -> 00<u><b>bbbbb</b></u>0</span>
+    <span class="incremental">                           4 is a key!</span>
+    </pre>
+</div>
+
+<div class="slide">
+    <h1>The problem</h1>
+    <pre>
+    <span class="xncremental">md5('foo1') -> a1b2c3d4</span>
+    <span class="xncremental">md5('foo2') -> 9a8b7c6d</span>
+    <span class="xncremental">md5('foo3') -> ff0ee1dd</span>
+    <span class="xncremental">md5('foo4') -> a1bbb3d4</span>
+    <span class="incremental">md5('foo5') -> 987abc65</span>
+    <span class="incremental">md5('foo6') -> a32cac67</span>
+    <span class="incremental">md5('foo7') -> 4e60f<u>111</u>    # Triple 1!</span>
+    <span class="incremental">                           md5('foo8') -> c1bd8e78</span>
+    <span class="incremental">                           ...</span>
+    <span class="incremental">                           md5('foo1007') -> f5e02b34</span>
+    <span class="incremental">                           7 is not a key....</span>
     </pre>
 </div>
 
 <div class="slide">
     <h1>Hashing</h1>
-    <!--[[[cog include_file("naive.py", start=5, end=7, start_has="def salted_hash", end_has="return")   ]]] {{{ -->
+    <!--[[[cog include_file("naive.py", start_from="def salted_hash", end_at="return")   ]]] {{{ -->
     <pre class='python'>
     def salted_hash(salt, i):
         bytes = f"{salt}{i}".encode("ascii")
@@ -112,7 +135,7 @@ from cogutil import *
 
 <div class="slide">
     <h1>Finding triples</h1>
-    <!--[[[cog include_file("naive.py", start=9, end=13, start_has="def triple", end_has="return")   ]]] {{{ -->
+    <!--[[[cog include_file("naive.py", start_from="def triple", end_at="return")   ]]] {{{ -->
     <pre class='python'>
     def triple(s):
         """Return the character that occurs as a triple, or None."""
