@@ -1,4 +1,4 @@
-SLUG = blank
+SLUG = adventures
 
 SLIDE_HTML = $(SLUG).html
 ZIP_FILE = $(SLUG).zip
@@ -54,7 +54,7 @@ publish: $(PX) pngs
 	cp -f $(IMAGES) $(WEBPREZHOME)
 	cp -rf $(VENDOR) $(WEBPREZHOME)
 
-ZIP_EXTRA = captioning.html
+ZIP_EXTRA = 
 
 zip $(ZIP_FILE): $(SLIDE_HTML)
 	zip -r $(ZIP_FILE) $(SLIDE_HTML) $(SUPPORT) $(IMAGES) $(ZIP_EXTRA) $(VENDOR)
