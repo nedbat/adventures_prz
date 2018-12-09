@@ -27,17 +27,17 @@ def is_key(salt, candidate):
 
     return False
 
-def key64(salt):
-    # Find the 64th key starting with `salt`.
+def nth_key(salt, n):
+    # Find the `n`th key starting with `salt`.
     candidate = 0
     num_keys = 0
     while True:
         if is_key(salt, candidate):
             num_keys += 1
-            if num_keys == 64:
+            if num_keys == n:
                 return candidate
         candidate += 1
 
-INPUT = 'zpqevtbw'
-k64 = key64(INPUT)
+INPUT = 'zpqevtbw'  # This will be different for you.
+k64 = nth_key(INPUT, 64)
 print(f"Puzzle 1: the 64th key is at index {k64}")

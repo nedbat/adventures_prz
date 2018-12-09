@@ -64,9 +64,13 @@ def include_file(
     if start_from:
         assert start is None
         assert end is None
-        start = next(i for i, l in enumerate(lines, 1) if start_from in l)
+        start = next((i for i, l in enumerate(lines, 1) if start_from in l), None)
+        if start is None:
+            raise Exception("Didn't find {!r} as a start line".format(start_from))
         if end_at:
-            end = next(i for i, l in enumerate(lines[start:], start+1) if end_at in l)
+            end = next((i for i, l in enumerate(lines[start:], start+1) if end_at in l), None)
+            if end is None:
+                raise Exception("Didn't find {!r} as an end line".format(end_at))
         elif line_count is not None:
             end = start + line_count - 1
         if section:
