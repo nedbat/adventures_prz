@@ -7,13 +7,13 @@ def salted_hash(salt, i):
     return hashlib.md5(bytes).hexdigest()
 
 def triple(s):
-    """Return a triple character, or None."""
+    # Return a triple character, or None.
     m = re.search(r"(.)\1\1", s)
     if m:
         return m.group(1)
 
 def is_key(salt, candidate):
-    """Is `candidate` a key?"""
+    # Is `candidate` a key?
     h = salted_hash(salt, candidate)
     t = triple(h)
     if t is None:
@@ -27,21 +27,17 @@ def is_key(salt, candidate):
 
     return False
 
-def key_indexes(salt):
-    """Find all the keys starting with `salt`."""
-    for candidate in itertools.count():
+def key64(salt):
+    # Find the 64th key starting with `salt`.
+    candidate = 0
+    num_keys = 0
+    while True:
         if is_key(salt, candidate):
-            yield candidate
-
-def complete_keys(salt):
-    """Return a list of 64 key indexes for salt."""
-    return list(itertools.islice(key_indexes(salt), 64))
+            num_keys += 1
+            if num_keys == 64:
+                return candidate
+        candidate += 1
 
 INPUT = 'zpqevtbw'
-
-def puzzle1():
-    complete = complete_keys(INPUT)
-    print(f"Puzzle 1: the 64th key is at index {complete[63]}")
-
-if __name__ == '__main__':
-    puzzle1()
+k64 = key64(INPUT)
+print(f"Puzzle 1: the 64th key is at index {k64}")

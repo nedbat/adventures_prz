@@ -171,7 +171,7 @@ from cogutil import *
     <!--[[[cog include_file("naive.py", start_from="def triple", end_at="return")   ]]] {{{ -->
     <pre class='python'>
     def triple(s):
-        """Return a triple character, or None."""
+        # Return a triple character, or None.
         m = re.search(r"(.)\1\1", s)
         if m:
             return m.group(1)
@@ -184,7 +184,7 @@ from cogutil import *
     <!--[[[cog include_file("naive.py", start_from="def is_key", line_count=14)   ]]] {{{ -->
     <pre class='python'>
     def is_key(salt, candidate):
-        """Is `candidate` a key?"""
+        # Is `candidate` a key?
         h = salted_hash(salt, candidate)
         t = triple(h)
         if t is None:
@@ -200,6 +200,40 @@ from cogutil import *
     </pre>
     <!--[[[end]]] }}} -->
 </div>
+
+<div class="slide">
+    <h1>The 64th key</h1>
+    <!--[[[cog include_file("naive.py", start_from="def key64", line_count=10)   ]]] {{{ -->
+    <pre class='python'>
+    def key64(salt):
+        # Find the 64th key starting with `salt`.
+        candidate = 0
+        num_keys = 0
+        while True:
+            if is_key(salt, candidate):
+                num_keys += 1
+                if num_keys == 64:
+                    return candidate
+            candidate += 1
+    </pre>
+    <!--[[[end]]] }}} -->
+</div>
+
+<div class="slide">
+    <h1>The answer</h1>
+    <!--[[[cog include_file("naive.py", start_from="INPUT", line_count=3)   ]]] {{{ -->
+    <pre class='python'>
+    INPUT = 'zpqevtbw'
+    k64 = key64(INPUT)
+    print(f"Puzzle 1: the 64th key is at index {k64}")
+    </pre>
+    <!--[[[end]]] }}} -->
+    <pre class="plaintext incremental">
+    $ python naive.py
+    Puzzle 1: the 64th key is at index 16106
+    </pre>
+</div>
+
 
 <!--
 <div class="slide section" data-layout="clean">

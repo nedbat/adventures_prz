@@ -160,6 +160,10 @@ img.icon {
     background: #fe4;
 }
 
+.slide pre .comment {
+    font-style: italic;
+}
+
 pre .selected {
     background: #fff;
     border: .15em solid #f66;
