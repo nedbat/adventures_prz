@@ -24,6 +24,7 @@ def include_file(
         start=None, end=None,
         start_has=None, end_has=None,
         start_from=None, end_at=None,
+        line_count=None,
         highlight=None,
         section=None,
         px=False,
@@ -57,13 +58,17 @@ def include_file(
     if section:
         assert start_from is None
         assert end_at is None
+        assert line_count is None
         start_from = "(((" + section + ")))"
         end_at = "(((end)))"
-    if start_from and end_at:
+    if start_from:
         assert start is None
         assert end is None
         start = next(i for i, l in enumerate(lines, 1) if start_from in l)
-        end = next(i for i, l in enumerate(lines[start:], start+1) if end_at in l)
+        if end_at:
+            end = next(i for i, l in enumerate(lines[start:], start+1) if end_at in l)
+        elif line_count is not None:
+            end = start + line_count - 1
         if section:
             start += 1
             end -= 1

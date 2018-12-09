@@ -16,12 +16,15 @@ def is_key(salt, candidate):
     """Is `candidate` a key?"""
     h = salted_hash(salt, candidate)
     t = triple(h)
-    if t is not None:
-        # We have a triple. Look ahead for a quint.
-        for check_ahead in range(1, 1001):
-            h2 = salted_hash(salt, candidate + check_ahead)
-            if t*5 in h2:
-                return True
+    if t is None:
+        return False
+
+    # We have a triple. Look ahead for a quint.
+    for check_ahead in range(1, 1001):
+        h2 = salted_hash(salt, candidate + check_ahead)
+        if t*5 in h2:
+            return True
+
     return False
 
 def key_indexes(salt):

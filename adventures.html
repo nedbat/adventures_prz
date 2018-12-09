@@ -179,6 +179,28 @@ from cogutil import *
     <!--[[[end]]] }}} -->
 </div>
 
+<div class="slide">
+    <h1>Finding keys</h1>
+    <!--[[[cog include_file("naive.py", start_from="def is_key", line_count=14)   ]]] {{{ -->
+    <pre class='python'>
+    def is_key(salt, candidate):
+        """Is `candidate` a key?"""
+        h = salted_hash(salt, candidate)
+        t = triple(h)
+        if t is None:
+            return False
+
+        # We have a triple. Look ahead for a quint.
+        for check_ahead in range(1, 1001):
+            h2 = salted_hash(salt, candidate + check_ahead)
+            if t*5 in h2:
+                return True
+
+        return False
+    </pre>
+    <!--[[[end]]] }}} -->
+</div>
+
 <!--
 <div class="slide section" data-layout="clean">
     <h1><label>A section</label> Section The First</h1>
