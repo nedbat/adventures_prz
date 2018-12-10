@@ -93,10 +93,11 @@ from cogutil import *
     <ul>
     <li class="incremental">"Santa's one-time cryptography pad"</li>
     <li class="incremental">Given a seed</li>
-    <li class="incremental">Find numbers where:
+    <li class="incremental">Sequential hashes: md5(seed + num)</li>
+    <li class="incremental">Find num where both:
         <ul>
         <li class="incremental">md5(seed + num) has a <b>3x</b> char</li>
-        <li class="incremental">one of the next 1000 numbers has that char <b>5x</b></li>
+        <li class="incremental">one of the next 1000 hashes: that char <b>5x</b></li>
         </ul>
     </ul>
 </div>
@@ -115,7 +116,7 @@ from cogutil import *
     <span class="incremental">                           md5('foo7') &rarr; 4e60f111</span>
     <span class="incremental">                           ...</span>
     <span class="incremental">                           md5('foo241') &rarr; 3a<u><b>bbbbb</b></u>0</span>
-    <span class="incremental">                           4 is a key!</span>
+    <span class="incremental">                           # 4 is a key!</span>
     </pre>
 </div>
 
@@ -133,7 +134,7 @@ from cogutil import *
     <span class="incremental">                           md5('foo8') &rarr; c1bd8e78</span>
     <span class="incremental">                           ...</span>
     <span class="incremental">                           md5('foo1007') &rarr; f5e02b34</span>
-    <span class="incremental">                           7 is not a key....</span>
+    <span class="incremental">                           # 7 is not a key....</span>
     </pre>
 </div>
 
@@ -151,12 +152,12 @@ from cogutil import *
     <span class="incremental">md5('foo8') &rarr; c1bd8e78</span>
     <span class="incremental">md5('foo9') &rarr; d8a9112f</span>
     <span class="incremental">...</span>
-    <span class="incremental">... until we find the 64th key</span>
+    <span class="incremental"># until we find the 64th key</span>
     </pre>
 </div>
 
 <div class="slide section" data-layout="clean">
-    <h1>Code for Part 1</h1>
+    <h1>Part 1</h1>
 </div>
 
 <div class="slide">
@@ -236,6 +237,9 @@ from cogutil import *
     </pre>
 </div>
 
+<div class="slide section" data-layout="clean">
+    <h1>Testing</h1>
+</div>
 
 <div class="slide">
     <h1>Testing</h1>
@@ -289,23 +293,62 @@ from cogutil import *
     <img src="advent_2016_14_test.png" class="fullwidth"/>
 </div>
 
-
 <div class="slide">
     <!--[[[cog include_file("naive.py", start_from='parametrize("salt', end_at="assert")   ]]] {{{ -->
     <pre class='python'>
     @pytest.mark.parametrize("salt, candidate, result", [
-        ('abc', 17, False),
-        ('abc', 18, False),
-        ('abc', 39, True),
-        ('abc', 92, True),
-        ('abc', 22727, False),
-        ('abc', 22728, True),
-        ('abc', 22729, False),
+        ('abc', 17, False),         # no triple
+        ('abc', 18, False),         # triple, no quint
+        ('abc', 39, True),          # a key
+        ('abc', 92, True),          # a key
+        ('abc', 22727, False),      # near a key
+        ('abc', 22728, True),       # a key
+        ('abc', 22729, False),      # near a key
     ])
     def test_is_key(salt, candidate, result):
         assert is_key(salt, candidate) == result
     </pre>
     <!--[[[end]]] }}} -->
+    <!--[[[cog include_file("naive.py", start_from='def test_nth_key', end_at="assert")   ]]] {{{ -->
+    <pre class='python'>
+    def test_nth_key():
+        assert nth_key("abc", 64) == 22728
+    </pre>
+    <!--[[[end]]] }}} -->
+    <pre class="plaintext incremental medium">
+    collected 12 items
+
+    naive.py ............                           [100%]
+    </pre>
+</div>
+
+<div class="slide" data-layout="clean">
+    <pre class="plaintext medium">
+    $ pytest naive.py
+    ================= test session starts =================
+    collected 12 items
+
+    naive.py ..F.........                           [100%]
+
+    ====================== FAILURES =======================
+    _________________ test_triples[aaa-b] _________________
+
+    s = 'aaa', t = 'b'
+
+        @pytest.mark.parametrize("s, t", [
+            ("hello there all", None),
+            ("aaa", "b"),
+            ("0123345xxx112315zzz124xx", "x"),
+        ])
+        def test_triples(s, t):
+    >       assert triple(s) == t
+    E       AssertionError: assert 'a' == 'b'
+    E         - a
+    E         + b
+
+    naive.py:28: AssertionError
+    ========= 1 failed, 11 passed in 3.80 seconds =========
+    </pre>
 </div>
 
 <div class="slide title" data-layout="clean">

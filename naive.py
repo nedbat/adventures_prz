@@ -21,7 +21,7 @@ def test_triple():
 
 @pytest.mark.parametrize("s, t", [
     ("hello there all", None),
-    ("aaa", "a"),
+    ("aaa", "b"),
     ("0123345xxx112315zzz124xx", "x"),
 ])
 def test_triples(s, t):
@@ -62,6 +62,9 @@ def nth_key(salt, n):
             num_keys += 1
             if num_keys == n:
                 return candidate
+
+def test_nth_key():
+    assert nth_key("abc", 64) == 22728
 
 if __name__ == "__main__":
     INPUT = 'zpqevtbw'  # This will be different for you!
