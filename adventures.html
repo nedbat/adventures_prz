@@ -109,7 +109,7 @@ from cogutil import *
     <span class="incremental">md5('foo1') &rarr; a1b2c3d4</span>
     <span class="incremental">md5('foo2') &rarr; 9a8b7c6d</span>
     <span class="incremental">md5('foo3') &rarr; ff0ee1dd</span>
-    <span class="incremental">md5('foo4') &rarr; a1<u><b>bbb</b></u>3d4     # Triple b!</span>
+    <span class="incremental">md5('foo4') &rarr; a1<u>bbb</u>3d4     # Triple b!</span>
     <span class="incremental">                           md5('foo5') &rarr; 987abc65</span>
     <span class="incremental">                           md5('foo6') &rarr; a32cac67</span>
     <span class="incremental">                           md5('foo7') &rarr; 4e60f111</span>
@@ -126,7 +126,7 @@ from cogutil import *
     <span class="xncremental">md5('foo1') &rarr; a1b2c3d4</span>
     <span class="xncremental">md5('foo2') &rarr; 9a8b7c6d</span>
     <span class="xncremental">md5('foo3') &rarr; ff0ee1dd</span>
-    <span class="xncremental">md5('foo4') &rarr; a1bbb3d4</span>
+    <span class="xncremental">md5('foo4') &rarr; a1<u>bbb</u>3d4  &#x2713;</span>
     <span class="incremental">md5('foo5') &rarr; 987abc65</span>
     <span class="incremental">md5('foo6') &rarr; a32cac67</span>
     <span class="incremental">md5('foo7') &rarr; 4e60f<u>111</u>     # Triple 1!</span>
@@ -144,15 +144,19 @@ from cogutil import *
     <span class="xncremental">md5('foo1') &rarr; a1b2c3d4</span>
     <span class="xncremental">md5('foo2') &rarr; 9a8b7c6d</span>
     <span class="xncremental">md5('foo3') &rarr; ff0ee1dd</span>
-    <span class="xncremental">md5('foo4') &rarr; a1bbb3d4</span>
+    <span class="xncremental">md5('foo4') &rarr; a1<u>bbb</u>3d4  &#x2713;</span>
     <span class="xncremental">md5('foo5') &rarr; 987abc65</span>
     <span class="xncremental">md5('foo6') &rarr; a32cac67</span>
-    <span class="xncremental">md5('foo7') &rarr; 4e60f111</span>
+    <span class="xncremental">md5('foo7') &rarr; 4e60f<u>111</u>  &#x2717;</span>
     <span class="incremental">md5('foo8') &rarr; c1bd8e78</span>
     <span class="incremental">md5('foo9') &rarr; d8a9112f</span>
     <span class="incremental">...</span>
     <span class="incremental">... until we find the 64th key</span>
     </pre>
+</div>
+
+<div class="slide section" data-layout="clean">
+    <h1>Code for Part 1</h1>
 </div>
 
 <div class="slide">
@@ -203,18 +207,16 @@ from cogutil import *
 
 <div class="slide">
     <h1>The 64th key</h1>
-    <!--[[[cog include_file("naive.py", start_from="def nth_key", line_count=10)   ]]] {{{ -->
+    <!--[[[cog include_file("naive.py", start_from="def nth_key", end_at="return")   ]]] {{{ -->
     <pre class='python'>
     def nth_key(salt, n):
         # Find the `n`th key starting with `salt`.
-        candidate = 0
         num_keys = 0
-        while True:
+        for candidate in itertools.count():
             if is_key(salt, candidate):
                 num_keys += 1
                 if num_keys == n:
                     return candidate
-            candidate += 1
     </pre>
     <!--[[[end]]] }}} -->
 </div>
@@ -223,7 +225,7 @@ from cogutil import *
     <h1>The answer</h1>
     <!--[[[cog include_file("naive.py", start_from="INPUT", line_count=3)   ]]] {{{ -->
     <pre class='python'>
-    INPUT = 'zpqevtbw'  # This will be different for you.
+    INPUT = 'zpqevtbw'  # This will be different for you!
     k64 = nth_key(INPUT, 64)
     print(f"Puzzle 1: the 64th key is at index {k64}")
     </pre>
@@ -235,11 +237,76 @@ from cogutil import *
 </div>
 
 
-<!--
-<div class="slide section" data-layout="clean">
-    <h1><label>A section</label> Section The First</h1>
+<div class="slide">
+    <h1>Testing</h1>
+    <!--[[[cog include_file("naive.py", start_from="def test_triple", end_at="assert")   ]]] {{{ -->
+    <pre class='python'>
+    def test_triple():
+        assert triple("helloaaathere") == "a"
+    </pre>
+    <!--[[[end]]] }}} -->
+    <pre class="plaintext incremental">
+    $ pytest naive.py
+    ================ test session starts ==================
+    platform darwin -- Python 3.6.5, pytest-4.0.1, py-1.7.0
+    rootdir: /Users/ned/prz/adventures, inifile:
+    collected 1 item
+
+    naive.py .                                     [100%]
+
+    ============== 1 passed in 0.01 seconds ===============
+    </pre>
 </div>
--->
+
+<div class="slide">
+    <h1>Many test cases</h1>
+    <!--[[[cog include_file("naive.py", start_from="@pytest.mark.parametrize", end_at="assert")   ]]] {{{ -->
+    <pre class='python'>
+    @pytest.mark.parametrize("s, t", [
+        ("hello there all", None),
+        ("aaa", "a"),
+        ("0123345xxx112315zzz124xx", "x"),
+    ])
+    def test_triples(s, t):
+        assert triple(s) == t
+    </pre>
+    <!--[[[end]]] }}} -->
+    <pre class="plaintext incremental medium">
+    $ pytest naive.py
+    ================= test session starts =================
+    platform darwin -- Python 3.6.5, pytest-4.0.1, py-1.7.0, pluggy-0.8.0
+    rootdir: /Users/ned/prz/adventures, inifile:
+    collected 4 items
+
+    naive.py ....                                   [100%]
+
+    ============== 4 passed in 0.01 seconds ===============
+    </pre>
+</div>
+
+<div class="slide">
+    <h1>Test cases!</h1>
+    <img src="advent_2016_14_test.png" class="fullwidth"/>
+</div>
+
+
+<div class="slide">
+    <!--[[[cog include_file("naive.py", start_from='parametrize("salt', end_at="assert")   ]]] {{{ -->
+    <pre class='python'>
+    @pytest.mark.parametrize("salt, candidate, result", [
+        ('abc', 17, False),
+        ('abc', 18, False),
+        ('abc', 39, True),
+        ('abc', 92, True),
+        ('abc', 22727, False),
+        ('abc', 22728, True),
+        ('abc', 22729, False),
+    ])
+    def test_is_key(salt, candidate, result):
+        assert is_key(salt, candidate) == result
+    </pre>
+    <!--[[[end]]] }}} -->
+</div>
 
 <div class="slide title" data-layout="clean">
     <h1 style="padding-top: 0em">Questions?</h1>

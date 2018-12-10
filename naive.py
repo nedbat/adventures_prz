@@ -1,6 +1,10 @@
+"""The naive code for part 1"""
+
 import hashlib
 import itertools
 import re
+
+import pytest
 
 def salted_hash(salt, i):
     bytes = f"{salt}{i}".encode("ascii")
@@ -11,6 +15,17 @@ def triple(s):
     m = re.search(r"(.)\1\1", s)
     if m:
         return m.group(1)
+
+def test_triple():
+    assert triple("helloaaathere") == "a"
+
+@pytest.mark.parametrize("s, t", [
+    ("hello there all", None),
+    ("aaa", "a"),
+    ("0123345xxx112315zzz124xx", "x"),
+])
+def test_triples(s, t):
+    assert triple(s) == t
 
 def is_key(salt, candidate):
     # Is `candidate` a key?
@@ -27,17 +42,28 @@ def is_key(salt, candidate):
 
     return False
 
+@pytest.mark.parametrize("salt, candidate, result", [
+    ('abc', 17, False),         # no triple
+    ('abc', 18, False),         # triple, no quint
+    ('abc', 39, True),          # a key
+    ('abc', 92, True),          # a key
+    ('abc', 22727, False),      # near a key
+    ('abc', 22728, True),       # a key
+    ('abc', 22729, False),      # near a key
+])
+def test_is_key(salt, candidate, result):
+    assert is_key(salt, candidate) == result
+
 def nth_key(salt, n):
     # Find the `n`th key starting with `salt`.
-    candidate = 0
     num_keys = 0
-    while True:
+    for candidate in itertools.count():
         if is_key(salt, candidate):
             num_keys += 1
             if num_keys == n:
                 return candidate
-        candidate += 1
 
-INPUT = 'zpqevtbw'  # This will be different for you.
-k64 = nth_key(INPUT, 64)
-print(f"Puzzle 1: the 64th key is at index {k64}")
+if __name__ == "__main__":
+    INPUT = 'zpqevtbw'  # This will be different for you!
+    k64 = nth_key(INPUT, 64)
+    print(f"Puzzle 1: the 64th key is at index {k64}")
