@@ -228,12 +228,12 @@ from cogutil import *
     <pre class='python'>
     INPUT = 'zpqevtbw'  # This will be different for you!
     k64 = nth_key(INPUT, 64)
-    print(f"Puzzle 1: the 64th key is at index {k64}")
+    print(f"Part 1: the 64th key is at index {k64}")
     </pre>
     <!--[[[end]]] }}} -->
     <pre class="plaintext incremental">
     $ python naive.py
-    Puzzle 1: the 64th key is at index 16106
+    Part 1: the 64th key is at index 16106
     </pre>
 </div>
 
@@ -350,6 +350,42 @@ from cogutil import *
     ========= 1 failed, 11 passed in 3.80 seconds =========
     </pre>
 </div>
+
+<div class="slide section" data-layout="clean">
+    <h1>Part 2</h1>
+</div>
+
+<div class="slide">
+    <h1>Part 2</h1>
+    <ul>
+    <li class="incremental">Same as part 1</li>
+    <li class="incremental">hash is: <tt>md5(md5(md5(... md5(seed, num))))</tt></li>
+    <li class="incremental">repeated 2017 times!</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Are we OK?</h1>
+    <pre class="plaintext incremental">
+    $ time python naive.py
+    Part 1: the 64th key is at index 16106
+
+    real    0m2.945s
+    user    0m2.869s
+    sys     0m0.043s
+    </pre>
+    <ul>
+    <li class="incremental">2.945 &times; 2017 = 5940 seconds = 99 minutes</li>
+    <li class="incremental">...too long!</li>
+    </ul>
+    <pre class="plaintext incremental">
+    $ python naive_counted.py
+    Part 1: the 64th key is at index 16106
+    Total of 1661356 hashes
+    </pre>
+</div>
+
+<!-- ==================== -->
 
 <div class="slide title" data-layout="clean">
     <h1 style="padding-top: 0em">Questions?</h1>

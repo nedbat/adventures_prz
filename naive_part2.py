@@ -6,9 +6,14 @@ import re
 
 import pytest
 
-def salted_hash(salt, i):
-    bytes = f"{salt}{i}".encode("ascii")
-    return hashlib.md5(bytes).hexdigest()
+def salted_hash_2017(salt, i):
+    val = f"{salt}{i}"
+    for _ in range(2017):
+        val = hashlib.md5(val.encode("ascii")).hexdigest()
+    return val
+
+def test_salted_hash_2017():
+    assert salted_hash_2017("abc", 0) == "a107ff634856bb300138cac6568c0f24"
 
 def triple(s):
     # Return a triple character, or None.
@@ -29,27 +34,24 @@ def test_triples(s, t):
 
 def is_key(salt, candidate):
     # Is `candidate` a key?
-    h = salted_hash(salt, candidate)
+    h = salted_hash_2017(salt, candidate)
     t = triple(h)
     if t is None:
         return False
 
     # We have a triple. Look ahead for a quint.
     for check_ahead in range(1, 1001):
-        h2 = salted_hash(salt, candidate + check_ahead)
+        h2 = salted_hash_2017(salt, candidate + check_ahead)
         if t*5 in h2:
             return True
 
     return False
 
 @pytest.mark.parametrize("salt, candidate, result", [
-    ('abc', 17, False),         # no triple
-    ('abc', 18, False),         # triple, no quint
-    ('abc', 39, True),          # a key
-    ('abc', 92, True),          # a key
-    ('abc', 22727, False),      # near a key
-    ('abc', 22728, True),       # a key
-    ('abc', 22729, False),      # near a key
+    ('abc', 4, False),          # no triple
+    ('abc', 5, False),          # triple, no quint
+    ('abc', 10, True),          # a key
+    ('abc', 22551, True),       # a key
 ])
 def test_is_key(salt, candidate, result):
     assert is_key(salt, candidate) == result
@@ -62,9 +64,6 @@ def nth_key(salt, n):
             num_keys += 1
             if num_keys == n:
                 return candidate
-
-def test_nth_key():
-    assert nth_key("abc", 64) == 22728
 
 if __name__ == "__main__":
     INPUT = 'zpqevtbw'  # This will be different for you!
