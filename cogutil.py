@@ -117,11 +117,12 @@ def include_file(
     text = "\n".join(lines)
     lang = "python" if fname.endswith(".py") else "text"
 
-    cog.outl("<div>")
     if show_label:
+        cog.outl("<div>")
         cog.outl("<div class='prelabel'>{}</div>".format(fname))
     include_code(text, lang=lang, firstline=start, number=True, highlight=highlight, px=px, classes=classes)
-    cog.outl("</div>")
+    if show_label:
+        cog.outl("</div>")
 
 
 def include_code(text, lang=None, number=False, firstline=1, show_text=False, highlight=None, px=False, classes=""):
