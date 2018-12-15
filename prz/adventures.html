@@ -87,11 +87,16 @@ include_file_default(show_label=True, indir="..")
 </div>
 
 <div class="slide">
-    <h1>12/14/2016</h1>
+    <h1>December 14, 2016</h1>
     <ul>
     <li class="incremental">"Santa's one-time cryptography pad"</li>
     <li class="incremental">Given a seed</li>
-    <li class="incremental">Sequential hashes: md5(seed + num)</li>
+    <li class="incremental">Sequential hashes:
+        <ul>
+            <li class="incremental">md5(seed + "0")</li>
+            <li class="incremental">md5(seed + "1")</li>
+            <li class="incremental">md5(seed + "2"), ...</li>
+        </ul></li>
     <li class="incremental">Find num where both:
         <ul>
         <li class="incremental">md5(seed + num) has a <b>3x</b> char</li>
@@ -581,6 +586,10 @@ include_file_default(show_label=True, indir="..")
     <!--[[[end]]] }}} -->
 </div>
 
+
+<div class="slide" data-layout="clean">
+    <img src="tree_2015.png" class="fullheight"/>
+</div>
 
 
 
