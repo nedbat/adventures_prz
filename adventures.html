@@ -473,8 +473,9 @@ include_file_default(show_label=True)
     <ul>
     <li class="incremental">Redoing previous hashes</li>
     </ul>
-    <!--[[[cog include_file("naive_counted.py", incremental=True, start_from="hashes = 0", end_at="return")   ]]] {{{ -->
     <div class="incremental">
+    <!--[[[cog include_file("naive_counted.py", start_from="hashes = 0", end_at="return")   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive_counted.py</div>
     <pre class='python'>
     hashes = 0
@@ -487,6 +488,7 @@ include_file_default(show_label=True)
     </pre>
     </div>
     <!--[[[end]]] }}} -->
+    </div>
     <pre class="plaintext incremental">
     $ python naive_counted.py
     Part 1: the 64th key is at index 16106

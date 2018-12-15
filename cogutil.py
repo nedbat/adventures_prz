@@ -23,7 +23,6 @@ INCLUDE_FILE_DEFAULTS = dict(
     fname=None,
     show_label=False,
     classes="",
-    incremental=False,
     )
 
 def include_file_default(**kwargs):
@@ -40,7 +39,6 @@ def include_file(
         show_label=None,
         px=False,
         classes=None,
-        incremental=None,
     ):
     """Include a text file.
 
@@ -69,8 +67,6 @@ def include_file(
         show_label = INCLUDE_FILE_DEFAULTS['show_label']
     if classes is None:
         classes = INCLUDE_FILE_DEFAULTS['classes']
-    if incremental is None:
-        incremental = INCLUDE_FILE_DEFAULTS['incremental']
 
     assert fname is not None, "Need a file name to include!"
 
@@ -119,10 +115,9 @@ def include_file(
     lines = [clip_long_boring_line(l, 60) for l in lines[start-1:end]]
 
     text = "\n".join(lines)
-
     lang = "python" if fname.endswith(".py") else "text"
-    wrapper_attrs = ' class="incremental"' if incremental else ''
-    cog.outl("<div{}>".format(wrapper_attrs))
+
+    cog.outl("<div>")
     if show_label:
         cog.outl("<div class='prelabel'>{}</div>".format(fname))
     include_code(text, lang=lang, firstline=start, number=True, highlight=highlight, px=px, classes=classes)
