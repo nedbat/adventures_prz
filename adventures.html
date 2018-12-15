@@ -85,6 +85,7 @@ from cogutil import *
     <h1>Advent of Code</h1>
     <ul>
     <li class="incremental">http://adventofcode.com</li>
+    <li>Also: reddit, visualizations</li>
     </ul>
 </div>
 
@@ -107,16 +108,16 @@ from cogutil import *
     <h1>For example</h1>
     <pre class="clear python">
     <span>seed = 'foo'</span>
-    <span class="incremental">md5('foo1') &rarr; a1b2c3d4</span>
-    <span class="incremental">md5('foo2') &rarr; 9a8b7c6d</span>
-    <span class="incremental">md5('foo3') &rarr; ff0ee1dd</span>
-    <span class="incremental">md5('foo4') &rarr; a1<u>bbb</u>3d4     # Triple b!</span>
-    <span class="incremental">                           md5('foo5') &rarr; 987abc65</span>
-    <span class="incremental">                           md5('foo6') &rarr; a32cac67</span>
-    <span class="incremental">                           md5('foo7') &rarr; 4e60f111</span>
+    <span class="incremental">md5('foo0') &rarr; a1b2c3d4</span>
+    <span class="incremental">md5('foo1') &rarr; 9a8b7c6d</span>
+    <span class="incremental">md5('foo2') &rarr; ff0ee1dd</span>
+    <span class="incremental">md5('foo3') &rarr; a1<u>bbb</u>3d4     # Triple b!</span>
+    <span class="incremental">                           md5('foo4') &rarr; 987abc65</span>
+    <span class="incremental">                           md5('foo5') &rarr; a32cac67</span>
+    <span class="incremental">                           md5('foo6') &rarr; 4e60f111</span>
     <span class="incremental">                           ...</span>
     <span class="incremental">                           md5('foo241') &rarr; 3a<u><b>bbbbb</b></u>0</span>
-    <span class="incremental">                           # 4 is a key!</span>
+    <span class="incremental">                           # 3 is a key!</span>
     </pre>
 </div>
 
@@ -124,17 +125,17 @@ from cogutil import *
     <h1>Keep looking</h1>
     <pre class="clear python">
     <span>seed = 'foo'</span>
-    <span class="xncremental">md5('foo1') &rarr; a1b2c3d4</span>
-    <span class="xncremental">md5('foo2') &rarr; 9a8b7c6d</span>
-    <span class="xncremental">md5('foo3') &rarr; ff0ee1dd</span>
-    <span class="xncremental">md5('foo4') &rarr; a1<u>bbb</u>3d4  &#x2713;</span>
-    <span class="incremental">md5('foo5') &rarr; 987abc65</span>
-    <span class="incremental">md5('foo6') &rarr; a32cac67</span>
-    <span class="incremental">md5('foo7') &rarr; 4e60f<u>111</u>     # Triple 1!</span>
-    <span class="incremental">                           md5('foo8') &rarr; c1bd8e78</span>
+    <span class="xncremental">md5('foo0') &rarr; a1b2c3d4</span>
+    <span class="xncremental">md5('foo1') &rarr; 9a8b7c6d</span>
+    <span class="xncremental">md5('foo2') &rarr; ff0ee1dd</span>
+    <span class="xncremental">md5('foo3') &rarr; a1<u>bbb</u>3d4  &#x2713;</span>
+    <span class="incremental">md5('foo4') &rarr; 987abc65</span>
+    <span class="incremental">md5('foo5') &rarr; a32cac67</span>
+    <span class="incremental">md5('foo6') &rarr; 4e60f<u>111</u>     # Triple 1!</span>
+    <span class="incremental">                           md5('foo7') &rarr; c1bd8e78</span>
     <span class="incremental">                           ...</span>
-    <span class="incremental">                           md5('foo1007') &rarr; f5e02b34</span>
-    <span class="incremental">                           # 7 is not a key....</span>
+    <span class="incremental">                           md5('foo1006') &rarr; f5e02b34</span>
+    <span class="incremental">                           # 6 is not a key....</span>
     </pre>
 </div>
 
@@ -142,15 +143,15 @@ from cogutil import *
     <h1>Keep looking</h1>
     <pre class="clear python">
     <span>seed = 'foo'</span>
-    <span class="xncremental">md5('foo1') &rarr; a1b2c3d4</span>
-    <span class="xncremental">md5('foo2') &rarr; 9a8b7c6d</span>
-    <span class="xncremental">md5('foo3') &rarr; ff0ee1dd</span>
-    <span class="xncremental">md5('foo4') &rarr; a1<u>bbb</u>3d4  &#x2713;</span>
-    <span class="xncremental">md5('foo5') &rarr; 987abc65</span>
-    <span class="xncremental">md5('foo6') &rarr; a32cac67</span>
-    <span class="xncremental">md5('foo7') &rarr; 4e60f<u>111</u>  &#x2717;</span>
-    <span class="incremental">md5('foo8') &rarr; c1bd8e78</span>
-    <span class="incremental">md5('foo9') &rarr; d8a9112f</span>
+    <span class="xncremental">md5('foo0') &rarr; a1b2c3d4</span>
+    <span class="xncremental">md5('foo1') &rarr; 9a8b7c6d</span>
+    <span class="xncremental">md5('foo2') &rarr; ff0ee1dd</span>
+    <span class="xncremental">md5('foo3') &rarr; a1<u>bbb</u>3d4  &#x2713;</span>
+    <span class="xncremental">md5('foo4') &rarr; 987abc65</span>
+    <span class="xncremental">md5('foo5') &rarr; a32cac67</span>
+    <span class="xncremental">md5('foo6') &rarr; 4e60f<u>111</u>  &#x2717;</span>
+    <span class="incremental">md5('foo7') &rarr; c1bd8e78</span>
+    <span class="incremental">md5('foo8') &rarr; d8a9112f</span>
     <span class="incremental">...</span>
     <span class="incremental"># until we find the 64th key</span>
     </pre>
@@ -377,6 +378,7 @@ from cogutil import *
     <ul>
     <li class="incremental">2.945 &times; 2017 = 5940 seconds = 99 minutes</li>
     <li class="incremental">...too long!</li>
+    <li class="incremental">(actually took 1 hour 31 minutes)</li>
     </ul>
     <pre class="plaintext incremental">
     $ python naive_counted.py
