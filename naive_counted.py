@@ -4,11 +4,11 @@ import hashlib
 import itertools
 import re
 
-hashes = 0
+HASHES = 0
 
 def salted_hash(salt, i):
-    global hashes
-    hashes += 1
+    global HASHES
+    HASHES += 1
     bytes = f"{salt}{i}".encode("ascii")
     return hashlib.md5(bytes).hexdigest()
 
@@ -45,4 +45,4 @@ def nth_key(salt, n):
 INPUT = 'zpqevtbw'  # This will be different for you.
 k64 = nth_key(INPUT, 64)
 print(f"Part 1: the 64th key is at index {k64}")
-print(f"Total of {hashes:,} hashes")
+print(f"Total of {HASHES:,} hashes")

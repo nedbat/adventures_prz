@@ -463,10 +463,12 @@ include_file_default(show_label=True, indir="..")
     </pre>
     </div>
     <!--[[[end]]] }}} -->
-    <ul>
-    <li class="incremental">(naive_part2.py actually took 1 hour 31 minutes)</li>
-    <li>TODO: Get screen shot</li>
-    </ul>
+    <pre class="plaintext incremental">
+    $ time python naive_part2.py
+    Part 2: the 64th key is at index 22423
+
+    real	86m33.516s
+    </pre>
 </div>
 
 <div class="slide">
@@ -475,15 +477,15 @@ include_file_default(show_label=True, indir="..")
     <li class="incremental">Redoing previous hashes</li>
     </ul>
     <div class="incremental">
-    <!--[[[cog include_file("naive_counted.py", start_from="hashes = 0", end_at="return")   ]]] {{{ -->
+    <!--[[[cog include_file("naive_counted.py", start_from="HASHES = 0", end_at="return")   ]]] {{{ -->
     <div>
     <div class='prelabel'>naive_counted.py</div>
     <pre class='python'>
-    hashes = 0
+    HASHES = 0
 
     def salted_hash(salt, i):
-        global hashes
-        hashes += 1
+        global HASHES
+        HASHES += 1
         bytes = f"{salt}{i}".encode("ascii")
         return hashlib.md5(bytes).hexdigest()
     </pre>
