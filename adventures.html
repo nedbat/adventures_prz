@@ -532,6 +532,60 @@ include_file_default(show_label=True)
     </pre>
 </div>
 
+<div class="slide">
+    <h1>Local cache</h1>
+    <!--[[[cog include_file("lcache.py", start_from="def make_cached_hasher", end_at="salted")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>lcache.py</div>
+    <pre class='python'>
+    def make_cached_hasher(iterations):
+        cache = {}
+
+        def hasher(salt, i):
+            val = val0 = f"{salt}{i}"
+            if val0 in cache:
+                return cache[val0]
+            for _ in range(iterations):
+                val = hashlib.md5(val.encode("ascii")).hexdigest()
+            cache[val0] = val
+            return val
+
+        return hasher
+
+    salted_hash_2017 = make_cached_hasher(2017)
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+</div>
+
+<div class="slide">
+    <h1>Separating cache from function</h1>
+    <!--[[[cog include_file("cache_decorator.py", start_from="def cached", end_at="return val")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>cache_decorator.py</div>
+    <pre class='python'>
+    def cached(func):
+        cache = {}
+        def wrapped(*args):
+            if args in cache:
+                return cache[args]
+            ret = func(*args)
+            cache[args] = ret
+            return ret
+        return wrapped
+
+    @cached
+    def salted_hash_2017(salt, i):      # from naive_part2.py
+        val = f"{salt}{i}"
+        for _ in range(2017):
+            val = hashlib.md5(val.encode("ascii")).hexdigest()
+        return val
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+</div>
+
+
 
 
 <!-- ==================== -->
