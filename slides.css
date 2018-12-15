@@ -116,6 +116,8 @@ img.icon {
 }
 .slide .prelabel {
     float: right;
+    margin-right: -.5em;
+    margin-top: -.25em;
     border: 1px solid #888;
     border-radius: .5em;
     padding: .25em .5em;

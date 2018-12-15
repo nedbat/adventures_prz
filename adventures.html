@@ -167,18 +167,21 @@ include_file_default(show_label=True)
     <!--[[[cog include_file_default(fname="naive.py")   ]]] {{{ -->
     <!--[[[end]]] }}} -->
     <!--[[[cog include_file(start_from="def salted_hash", end_at="return")   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def salted_hash(salt, i):
         bytes = f"{salt}{i}".encode("ascii")
         return hashlib.md5(bytes).hexdigest()
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
 </div>
 
 <div class="slide">
     <h1>Finding triples</h1>
     <!--[[[cog include_file(start_from="def triple", end_at="return")   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def triple(s):
@@ -187,12 +190,14 @@ include_file_default(show_label=True)
         if m:
             return m.group(1)
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
 </div>
 
 <div class="slide">
     <h1>Finding keys</h1>
     <!--[[[cog include_file(start_from="def is_key", line_count=14)   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def is_key(salt, candidate):
@@ -210,12 +215,14 @@ include_file_default(show_label=True)
 
         return False
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
 </div>
 
 <div class="slide">
     <h1>The 64th key</h1>
     <!--[[[cog include_file(start_from="def nth_key", end_at="return")   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def nth_key(salt, n):
@@ -227,18 +234,21 @@ include_file_default(show_label=True)
                 if num_keys == n:
                     return candidate
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
 </div>
 
 <div class="slide">
     <h1>The answer</h1>
     <!--[[[cog include_file(start_from="INPUT", line_count=3)   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     INPUT = 'zpqevtbw'  # Yours will be different!
     k64 = nth_key(INPUT, 64)
     print(f"Part 1: the 64th key is at index {k64}")
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
     <pre class="plaintext incremental">
     $ python naive.py
@@ -253,11 +263,13 @@ include_file_default(show_label=True)
 <div class="slide">
     <h1>Testing</h1>
     <!--[[[cog include_file(start_from="def test_triple", end_at="assert")   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def test_triple():
         assert triple("helloaaathere") == "a"
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
     <pre class="plaintext incremental">
     $ pytest naive.py
@@ -275,6 +287,7 @@ include_file_default(show_label=True)
 <div class="slide">
     <h1>Many test cases</h1>
     <!--[[[cog include_file(start_from="@pytest.mark.parametrize", end_at="assert")   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     @pytest.mark.parametrize("s, t", [
@@ -285,6 +298,7 @@ include_file_default(show_label=True)
     def test_triples(s, t):
         assert triple(s) == t
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
     <pre class="plaintext incremental medium">
     $ pytest naive.py
@@ -306,6 +320,7 @@ include_file_default(show_label=True)
 
 <div class="slide">
     <!--[[[cog include_file(start_from='parametrize("salt', end_at="assert")   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     @pytest.mark.parametrize("salt, num, result", [
@@ -320,13 +335,16 @@ include_file_default(show_label=True)
     def test_is_key(salt, num, result):
         assert is_key(salt, num) == result
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
     <!--[[[cog include_file(start_from='def test_nth_key', end_at="assert")   ]]] {{{ -->
+    <div>
     <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def test_nth_key():
         assert nth_key("abc", 64) == 22728
     </pre>
+    </div>
     <!--[[[end]]] }}} -->
     <pre class="plaintext incremental medium">
     collected 12 items
@@ -390,16 +408,98 @@ include_file_default(show_label=True)
     <ul>
     <li class="incremental">2.945 &times; 2017 = 5940 seconds = 99 minutes</li>
     <li class="incremental">...too long!</li>
-    <li class="incremental">(naive_part2.py actually took 1 hour 31 minutes)</li>
     </ul>
-    <!--
+</div>
+
+<div class="slide">
+    <h1>naive_part2.py</h1>
+    <!--[[[cog include_file("naive_part2.py", start_from="def salted_hash_2017", end_at="return")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>naive_part2.py</div>
+    <pre class='python'>
+    def salted_hash_2017(salt, i):
+        val = f"{salt}{i}"
+        for _ in range(2017):
+            val = hashlib.md5(val.encode("ascii")).hexdigest()
+        return val
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+    <ul>
+    <li class="incremental">(naive_part2.py actually took 1 hour 31 minutes)</li>
+    <li>TODO: Get screen shot</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>The problem</h1>
+    <ul>
+    <li class="incremental">Redoing previous hashes</li>
+    </ul>
+    <!--[[[cog include_file("naive_counted.py", incremental=True, start_from="hashes = 0", end_at="return")   ]]] {{{ -->
+    <div class="incremental">
+    <div class='prelabel'>naive_counted.py</div>
+    <pre class='python'>
+    hashes = 0
+
+    def salted_hash(salt, i):
+        global hashes
+        hashes += 1
+        bytes = f"{salt}{i}".encode("ascii")
+        return hashlib.md5(bytes).hexdigest()
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
     <pre class="plaintext incremental">
     $ python naive_counted.py
     Part 1: the 64th key is at index 16106
-    Total of 1661356 hashes
+    Total of 1,661,356 hashes
     </pre>
-    -->
 </div>
+
+<div class="slide">
+    <h1>Caching results</h1>
+    <ul>
+    <li class="incremental">Store answers</li>
+    <li class="incremental">Lookup before compute</li>
+    <li class="incremental">Faster!</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Title</h1>
+    <!--[[[cog include_file("gcache.py", start_from="CACHE =", end_at="return val")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>gcache.py</div>
+    <pre class='python'>
+    CACHE = {}
+
+    def salted_hash_2017(salt, i):
+        val = val0 = f"{salt}{i}"
+        if val0 in CACHE:
+            return CACHE[val0]
+        for _ in range(2017):
+            val = hashlib.md5(val.encode("ascii")).hexdigest()
+        CACHE[val0] = val
+        return val
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+    <ul>
+    <li class="incremental">thing1</li>
+    <li class="incremental">thing2</li>
+    <li class="incremental">thing3</li>
+    </ul>
+</div>
+
+<pre class="plaintext incremental">
+$ time python gcache.py
+Part 2: the 64th key is at index 22423
+
+real	0m54.688s
+user	0m54.237s
+sys	0m0.230s
+</pre>
 
 <!-- ==================== -->
 

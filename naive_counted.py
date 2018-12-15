@@ -45,4 +45,4 @@ def nth_key(salt, n):
 INPUT = 'zpqevtbw'  # This will be different for you.
 k64 = nth_key(INPUT, 64)
 print(f"Part 1: the 64th key is at index {k64}")
-print(f"Total of {hashes} hashes")
+print(f"Total of {hashes:,} hashes")

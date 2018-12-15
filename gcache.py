@@ -1,4 +1,4 @@
-"""The naive code for part 2.  This will be too slow!"""
+"""Using a global cache"""
 
 import hashlib
 import itertools
@@ -6,10 +6,15 @@ import re
 
 import pytest
 
+CACHE = {}
+
 def salted_hash_2017(salt, i):
-    val = f"{salt}{i}"
+    val = val0 = f"{salt}{i}"
+    if val0 in CACHE:
+        return CACHE[val0]
     for _ in range(2017):
         val = hashlib.md5(val.encode("ascii")).hexdigest()
+    CACHE[val0] = val
     return val
 
 def test_salted_hash_2017():
