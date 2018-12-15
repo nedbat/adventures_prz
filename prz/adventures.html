@@ -165,11 +165,11 @@ include_file_default(show_label=True, indir="..")
 
 <div class="slide">
     <h1>Hashing</h1>
-    <!--[[[cog include_file_default(fname="naive.py")   ]]] {{{ -->
+    <!--[[[cog include_file_default(fname="part1.py")   ]]] {{{ -->
     <!--[[[end]]] }}} -->
     <!--[[[cog include_file(start_from="def salted_hash", end_at="return")   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     def salted_hash(salt, i):
         bytes = f"{salt}{i}".encode("ascii")
@@ -183,7 +183,7 @@ include_file_default(show_label=True, indir="..")
         salted_hash("something", 17)
         """,
         prelude="""\
-        exec(open("../naive.py").read())
+        exec(open("../part1.py").read())
         """)
     ]]]-->
     <pre class='pycon'>
@@ -200,7 +200,7 @@ include_file_default(show_label=True, indir="..")
     <h1>Finding triples</h1>
     <!--[[[cog include_file(start_from="def triple", end_at="return")   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     def triple(s):
         # Return a triple character, or None.
@@ -218,7 +218,7 @@ include_file_default(show_label=True, indir="..")
         triple("111 22222 333")
         """,
         prelude="""\
-        exec(open("../naive.py").read())
+        exec(open("../part1.py").read())
         """)
     ]]]-->
     <pre class='pycon'>
@@ -238,7 +238,7 @@ include_file_default(show_label=True, indir="..")
     <h1>Finding keys</h1>
     <!--[[[cog include_file(start_from="def is_key", line_count=14)   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     def is_key(salt, candidate):
         # Is `candidate` a key?
@@ -263,7 +263,7 @@ include_file_default(show_label=True, indir="..")
     <h1>The 64th key</h1>
     <!--[[[cog include_file(start_from="def nth_key", end_at="return")   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     def nth_key(salt, n):
         # Find the `n`th key starting with `salt`.
@@ -282,7 +282,7 @@ include_file_default(show_label=True, indir="..")
     <h1>The answer</h1>
     <!--[[[cog include_file(start_from="INPUT", line_count=3)   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     INPUT = 'zpqevtbw'  # Yours will be different!
     k64 = nth_key(INPUT, 64)
@@ -291,7 +291,7 @@ include_file_default(show_label=True, indir="..")
     </div>
     <!--[[[end]]] }}} -->
     <pre class="plaintext incremental">
-    $ python naive.py
+    $ python part1.py
     Part 1: the 64th key is at index 16106
     </pre>
 </div>
@@ -304,7 +304,7 @@ include_file_default(show_label=True, indir="..")
     <h1>Testing</h1>
     <!--[[[cog include_file(start_from="def test_triple", end_at="assert")   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     def test_triple():
         assert triple("helloaaathere") == "a"
@@ -312,13 +312,13 @@ include_file_default(show_label=True, indir="..")
     </div>
     <!--[[[end]]] }}} -->
     <pre class="plaintext incremental">
-    $ pytest naive.py
+    $ pytest part1.py
     ================ test session starts ==================
     platform darwin -- Python 3.6.5, pytest-4.0.1, py-1.7.0
     rootdir: /Users/ned/prz/adventures, inifile:
     collected 1 item
 
-    naive.py .                                     [100%]
+    part1.py .                                     [100%]
 
     ============== 1 passed in 0.01 seconds ===============
     </pre>
@@ -328,7 +328,7 @@ include_file_default(show_label=True, indir="..")
     <h1>Many test cases</h1>
     <!--[[[cog include_file(start_from="@pytest.mark.parametrize", end_at="assert")   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     @pytest.mark.parametrize("s, t", [
         ("hello there all", None),
@@ -341,13 +341,13 @@ include_file_default(show_label=True, indir="..")
     </div>
     <!--[[[end]]] }}} -->
     <pre class="plaintext incremental medium">
-    $ pytest naive.py
+    $ pytest part1.py
     ================= test session starts =================
     platform darwin -- Python 3.6.5, pytest-4.0.1, py-1.7.0, pluggy-0.8.0
     rootdir: /Users/ned/prz/adventures, inifile:
     collected 4 items
 
-    naive.py ....                                   [100%]
+    part1.py ....                                   [100%]
 
     ============== 4 passed in 0.01 seconds ===============
     </pre>
@@ -361,7 +361,7 @@ include_file_default(show_label=True, indir="..")
 <div class="slide">
     <!--[[[cog include_file(start_from='parametrize("salt', end_at="assert")   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     @pytest.mark.parametrize("salt, num, result", [
         ('abc', 17, False),         # no triple
@@ -379,7 +379,7 @@ include_file_default(show_label=True, indir="..")
     <!--[[[end]]] }}} -->
     <!--[[[cog include_file(start_from='def test_nth_key', end_at="assert")   ]]] {{{ -->
     <div>
-    <div class='prelabel'>naive.py</div>
+    <div class='prelabel'>part1.py</div>
     <pre class='python'>
     def test_nth_key():
         assert nth_key("abc", 64) == 22728
@@ -389,17 +389,17 @@ include_file_default(show_label=True, indir="..")
     <pre class="plaintext incremental medium">
     collected 12 items
 
-    naive.py ............                           [100%]
+    part1.py ............                           [100%]
     </pre>
 </div>
 
 <div class="slide" data-layout="clean">
     <pre class="plaintext medium">
-    $ pytest naive.py
+    $ pytest part1.py
     ================= test session starts =================
     collected 12 items
 
-    naive.py ..F.........                           [100%]
+    part1.py ..F.........                           [100%]
 
     ====================== FAILURES =======================
     _________________ test_triples[aaa-b] _________________
@@ -417,7 +417,7 @@ include_file_default(show_label=True, indir="..")
     E         - a
     E         + b
 
-    naive.py:28: AssertionError
+    part1.py:28: AssertionError
     ========= 1 failed, 11 passed in 3.80 seconds =========
     </pre>
 </div>
@@ -438,7 +438,7 @@ include_file_default(show_label=True, indir="..")
 <div class="slide">
     <h1>Are we OK?</h1>
     <pre class="plaintext incremental">
-    $ time python naive.py
+    $ time python part1.py
     Part 1: the 64th key is at index 16106
 
     real    0m2.945s
