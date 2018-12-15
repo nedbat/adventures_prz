@@ -42,7 +42,7 @@ def is_key(salt, candidate):
 
     return False
 
-@pytest.mark.parametrize("salt, candidate, result", [
+@pytest.mark.parametrize("salt, num, result", [
     ('abc', 17, False),         # no triple
     ('abc', 18, False),         # triple, no quint
     ('abc', 39, True),          # a key
@@ -51,8 +51,8 @@ def is_key(salt, candidate):
     ('abc', 22728, True),       # a key
     ('abc', 22729, False),      # near a key
 ])
-def test_is_key(salt, candidate, result):
-    assert is_key(salt, candidate) == result
+def test_is_key(salt, num, result):
+    assert is_key(salt, num) == result
 
 def nth_key(salt, n):
     # Find the `n`th key starting with `salt`.
@@ -67,6 +67,6 @@ def test_nth_key():
     assert nth_key("abc", 64) == 22728
 
 if __name__ == "__main__":
-    INPUT = 'zpqevtbw'  # This will be different for you!
+    INPUT = 'zpqevtbw'  # Yours will be different!
     k64 = nth_key(INPUT, 64)
     print(f"Part 1: the 64th key is at index {k64}")

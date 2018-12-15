@@ -114,6 +114,14 @@ img.icon {
     padding: .3em .35em;
     line-height: 1.15;
 }
+.slide .prelabel {
+    float: right;
+    border: 1px solid #888;
+    border-radius: .5em;
+    padding: .25em .5em;
+    background: white;
+    box-shadow: .2em .2em .2em rgba(0, 0, 0, 0.4);
+}
 
 .slide tt {
     font-family: Consolas, monaco, monospace;

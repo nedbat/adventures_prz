@@ -15,6 +15,7 @@ Process this file with cog:
 <!--[[[cog
 import cog
 from cogutil import *
+include_file_default(show_label=True)
 ]]]-->
 <!--[[[end]]]-->
 <head>
@@ -163,7 +164,10 @@ from cogutil import *
 
 <div class="slide">
     <h1>Hashing</h1>
-    <!--[[[cog include_file("naive.py", start_from="def salted_hash", end_at="return")   ]]] {{{ -->
+    <!--[[[cog include_file_default(fname="naive.py")   ]]] {{{ -->
+    <!--[[[end]]] }}} -->
+    <!--[[[cog include_file(start_from="def salted_hash", end_at="return")   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def salted_hash(salt, i):
         bytes = f"{salt}{i}".encode("ascii")
@@ -174,7 +178,8 @@ from cogutil import *
 
 <div class="slide">
     <h1>Finding triples</h1>
-    <!--[[[cog include_file("naive.py", start_from="def triple", end_at="return")   ]]] {{{ -->
+    <!--[[[cog include_file(start_from="def triple", end_at="return")   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def triple(s):
         # Return a triple character, or None.
@@ -187,7 +192,8 @@ from cogutil import *
 
 <div class="slide">
     <h1>Finding keys</h1>
-    <!--[[[cog include_file("naive.py", start_from="def is_key", line_count=14)   ]]] {{{ -->
+    <!--[[[cog include_file(start_from="def is_key", line_count=14)   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def is_key(salt, candidate):
         # Is `candidate` a key?
@@ -209,7 +215,8 @@ from cogutil import *
 
 <div class="slide">
     <h1>The 64th key</h1>
-    <!--[[[cog include_file("naive.py", start_from="def nth_key", end_at="return")   ]]] {{{ -->
+    <!--[[[cog include_file(start_from="def nth_key", end_at="return")   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def nth_key(salt, n):
         # Find the `n`th key starting with `salt`.
@@ -225,9 +232,10 @@ from cogutil import *
 
 <div class="slide">
     <h1>The answer</h1>
-    <!--[[[cog include_file("naive.py", start_from="INPUT", line_count=3)   ]]] {{{ -->
+    <!--[[[cog include_file(start_from="INPUT", line_count=3)   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
-    INPUT = 'zpqevtbw'  # This will be different for you!
+    INPUT = 'zpqevtbw'  # Yours will be different!
     k64 = nth_key(INPUT, 64)
     print(f"Part 1: the 64th key is at index {k64}")
     </pre>
@@ -244,7 +252,8 @@ from cogutil import *
 
 <div class="slide">
     <h1>Testing</h1>
-    <!--[[[cog include_file("naive.py", start_from="def test_triple", end_at="assert")   ]]] {{{ -->
+    <!--[[[cog include_file(start_from="def test_triple", end_at="assert")   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def test_triple():
         assert triple("helloaaathere") == "a"
@@ -265,7 +274,8 @@ from cogutil import *
 
 <div class="slide">
     <h1>Many test cases</h1>
-    <!--[[[cog include_file("naive.py", start_from="@pytest.mark.parametrize", end_at="assert")   ]]] {{{ -->
+    <!--[[[cog include_file(start_from="@pytest.mark.parametrize", end_at="assert")   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
     @pytest.mark.parametrize("s, t", [
         ("hello there all", None),
@@ -295,9 +305,10 @@ from cogutil import *
 </div>
 
 <div class="slide">
-    <!--[[[cog include_file("naive.py", start_from='parametrize("salt', end_at="assert")   ]]] {{{ -->
+    <!--[[[cog include_file(start_from='parametrize("salt', end_at="assert")   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
-    @pytest.mark.parametrize("salt, candidate, result", [
+    @pytest.mark.parametrize("salt, num, result", [
         ('abc', 17, False),         # no triple
         ('abc', 18, False),         # triple, no quint
         ('abc', 39, True),          # a key
@@ -306,11 +317,12 @@ from cogutil import *
         ('abc', 22728, True),       # a key
         ('abc', 22729, False),      # near a key
     ])
-    def test_is_key(salt, candidate, result):
-        assert is_key(salt, candidate) == result
+    def test_is_key(salt, num, result):
+        assert is_key(salt, num) == result
     </pre>
     <!--[[[end]]] }}} -->
-    <!--[[[cog include_file("naive.py", start_from='def test_nth_key', end_at="assert")   ]]] {{{ -->
+    <!--[[[cog include_file(start_from='def test_nth_key', end_at="assert")   ]]] {{{ -->
+    <div class='prelabel'>naive.py</div>
     <pre class='python'>
     def test_nth_key():
         assert nth_key("abc", 64) == 22728
@@ -360,7 +372,7 @@ from cogutil import *
     <h1>Part 2</h1>
     <ul>
     <li class="incremental">Same as part 1</li>
-    <li class="incremental">hash is: <tt>md5(md5(md5(... md5(seed, num))))</tt></li>
+    <li class="incremental">But hash is:<br/><tt>&nbsp;&nbsp;md5(md5(md5(... md5(seed, num))))</tt></li>
     <li class="incremental">repeated 2017 times!</li>
     </ul>
 </div>
@@ -378,13 +390,15 @@ from cogutil import *
     <ul>
     <li class="incremental">2.945 &times; 2017 = 5940 seconds = 99 minutes</li>
     <li class="incremental">...too long!</li>
-    <li class="incremental">(actually took 1 hour 31 minutes)</li>
+    <li class="incremental">(naive_part2.py actually took 1 hour 31 minutes)</li>
     </ul>
+    <!--
     <pre class="plaintext incremental">
     $ python naive_counted.py
     Part 1: the 64th key is at index 16106
     Total of 1661356 hashes
     </pre>
+    -->
 </div>
 
 <!-- ==================== -->

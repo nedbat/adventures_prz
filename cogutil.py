@@ -19,16 +19,26 @@ def clip_long_boring_line(s, l):
     return s
 
 
+INCLUDE_FILE_DEFAULTS = dict(
+    fname=None,
+    show_label=False,
+    classes="",
+    )
+
+def include_file_default(**kwargs):
+    INCLUDE_FILE_DEFAULTS.update(kwargs)
+
 def include_file(
-        fname,
+        fname=None,
         start=None, end=None,
         start_has=None, end_has=None,
         start_from=None, end_at=None,
         line_count=None,
         highlight=None,
         section=None,
+        show_label=None,
         px=False,
-        classes=""
+        classes=None,
     ):
     """Include a text file.
 
@@ -51,6 +61,15 @@ def include_file(
     `classes` are extra css classes to add to the <pre> tag.
 
     """
+    if fname is None:
+        fname = INCLUDE_FILE_DEFAULTS['fname']
+    if show_label is None:
+        show_label = INCLUDE_FILE_DEFAULTS['show_label']
+    if classes is None:
+        classes = INCLUDE_FILE_DEFAULTS['classes']
+
+    assert fname is not None, "Need a file name to include!"
+
     with open(fname) as f:
         text = f.read()
 
@@ -98,6 +117,8 @@ def include_file(
     text = "\n".join(lines)
 
     lang = "python" if fname.endswith(".py") else "text"
+    if show_label:
+        cog.outl("<div class='prelabel'>{}</div>".format(fname))
     include_code(text, lang=lang, firstline=start, number=True, highlight=highlight, px=px, classes=classes)
 
 
