@@ -115,14 +115,15 @@ img.icon {
     line-height: 1.15;
 }
 .slide .prelabel {
+    font-size: 80%;
+    color: #030;
     float: right;
-    margin-right: -.5em;
-    margin-top: -.25em;
-    border: 1px solid #888;
-    border-radius: .5em;
+    margin-right: .25em;
+    margin-top: .25em;
+    border: 1px solid #beb;
+    border-radius: .15em;
     padding: .25em .5em;
-    background: white;
-    box-shadow: .2em .2em .2em rgba(0, 0, 0, 0.4);
+    background: #f8fff8;
 }
 
 .slide tt {
