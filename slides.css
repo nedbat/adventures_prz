@@ -162,6 +162,10 @@ img.icon {
     background: #cfc;
 }
 
+.slide pre.pycon {
+    background: #cee;
+}
+
 .slide pre .attn {
     background: #ada;
     border-radius: .15em;

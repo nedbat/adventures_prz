@@ -11,7 +11,7 @@ class CagedPrompt(code.InteractiveConsole):
         code.InteractiveConsole.__init__(self, env)
 
     def run(self, input, banner=True):
-        self.out = StringIO.StringIO()
+        self.out = StringIO()
         self.inlines = textwrap.dedent(input).splitlines()
         old_stdout = sys.stdout
         sys.stdout = self.out
@@ -19,7 +19,7 @@ class CagedPrompt(code.InteractiveConsole):
             banner_text = "Python " + sys.version.split("[")[0]
         else:
             banner_text = ""
-        self.interact(banner_text)
+        self.interact(banner_text, exitmsg="")
         sys.stdout = old_stdout
         self.output = self.out.getvalue()
 

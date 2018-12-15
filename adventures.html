@@ -176,6 +176,23 @@ include_file_default(show_label=True)
     </pre>
     </div>
     <!--[[[end]]] }}} -->
+    <div class="incremental">
+    <!--[[[cog
+    prompt_session("""\
+        salted_hash("something", 17)
+        """,
+        prelude="""\
+        from naive import salted_hash
+        """)
+    ]]]-->
+    <pre class='pycon'>
+    &gt;&gt;&gt; salted_hash("something", 17)
+    '594a263646d6b3c5db804b28f62cbc67'
+
+
+    </pre>
+    <!--[[[end]]]-->
+    </div>
 </div>
 
 <div class="slide">
@@ -192,6 +209,28 @@ include_file_default(show_label=True)
     </pre>
     </div>
     <!--[[[end]]] }}} -->
+    <div class="incremental">
+    <!--[[[cog
+    prompt_session("""\
+        triple("what aaa something")
+        triple("hello world")
+        triple("111 22222 333")
+        """,
+        prelude="""\
+        from naive import triple
+        """)
+    ]]]-->
+    <pre class='pycon'>
+    &gt;&gt;&gt; triple("what aaa something")
+    'a'
+    &gt;&gt;&gt; triple("hello world")
+    &gt;&gt;&gt; triple("111 22222 333")
+    '1'
+
+
+    </pre>
+    <!--[[[end]]]-->
+    </div>
 </div>
 
 <div class="slide">
@@ -402,8 +441,6 @@ include_file_default(show_label=True)
     Part 1: the 64th key is at index 16106
 
     real    0m2.945s
-    user    0m2.869s
-    sys     0m0.043s
     </pre>
     <ul>
     <li class="incremental">2.945 &times; 2017 = 5940 seconds = 99 minutes</li>
@@ -467,7 +504,7 @@ include_file_default(show_label=True)
 </div>
 
 <div class="slide">
-    <h1>Title</h1>
+    <h1>A cache dict</h1>
     <!--[[[cog include_file("gcache.py", start_from="CACHE =", end_at="return val")   ]]] {{{ -->
     <div>
     <div class='prelabel'>gcache.py</div>
@@ -485,21 +522,15 @@ include_file_default(show_label=True)
     </pre>
     </div>
     <!--[[[end]]] }}} -->
-    <ul>
-    <li class="incremental">thing1</li>
-    <li class="incremental">thing2</li>
-    <li class="incremental">thing3</li>
-    </ul>
+    <pre class="plaintext incremental">
+    $ time python gcache.py
+    Part 2: the 64th key is at index 22423
+
+    real	0m54.688s
+    </pre>
 </div>
 
-<pre class="plaintext incremental">
-$ time python gcache.py
-Part 2: the 64th key is at index 22423
 
-real	0m54.688s
-user	0m54.237s
-sys	0m0.230s
-</pre>
 
 <!-- ==================== -->
 
