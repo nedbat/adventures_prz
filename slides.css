@@ -116,6 +116,7 @@ img.icon {
 }
 .slide .prelabel {
     font-size: 80%;
+    font-style: italic;
     color: #030;
     float: right;
     margin-right: .25em;
