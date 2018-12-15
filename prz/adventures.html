@@ -15,7 +15,7 @@ Process this file with cog:
 <!--[[[cog
 import cog
 from cogutil import *
-include_file_default(show_label=True)
+include_file_default(show_label=True, indir="..")
 ]]]-->
 <!--[[[end]]]-->
 <head>
@@ -182,7 +182,7 @@ include_file_default(show_label=True)
         salted_hash("something", 17)
         """,
         prelude="""\
-        from naive import salted_hash
+        exec(open("../naive.py").read())
         """)
     ]]]-->
     <pre class='pycon'>
@@ -217,7 +217,7 @@ include_file_default(show_label=True)
         triple("111 22222 333")
         """,
         prelude="""\
-        from naive import triple
+        exec(open("../naive.py").read())
         """)
     ]]]-->
     <pre class='pycon'>

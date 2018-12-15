@@ -23,6 +23,7 @@ INCLUDE_FILE_DEFAULTS = dict(
     fname=None,
     show_label=False,
     classes="",
+    indir="",
     )
 
 def include_file_default(**kwargs):
@@ -67,10 +68,11 @@ def include_file(
         show_label = INCLUDE_FILE_DEFAULTS['show_label']
     if classes is None:
         classes = INCLUDE_FILE_DEFAULTS['classes']
+    indir = INCLUDE_FILE_DEFAULTS['indir']
 
     assert fname is not None, "Need a file name to include!"
 
-    with open(fname) as f:
+    with open(os.path.join(indir, fname)) as f:
         text = f.read()
 
     lines = text.splitlines()
