@@ -130,6 +130,8 @@ def include_file(
 def include_code(text, lang=None, number=False, firstline=1, show_text=False, highlight=None, px=False, classes=""):
     text = textwrap.dedent(text)
 
+    text = "\n".join(l.rstrip() for l in text.splitlines())
+
     if px:
         cog.outl("<code lang='{}'>".format(lang))
         cog.outl(text.replace("&", "&amp;").replace("<", "&lt;"))
