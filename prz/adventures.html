@@ -588,6 +588,250 @@ include_file_default(show_label=True, indir="..")
     <!--[[[end]]] }}} -->
 </div>
 
+<div class="slide">
+    <h1>Caching</h1>
+    <ul>
+    <li class="incremental">Pros:
+        <ul>
+            <li>Random access</li>
+            <li>Self-contained</li>
+        </ul>
+    </li>
+    <li class="incremental">Cons:
+        <ul>
+            <li>Args must be hashable</li>
+            <li>No space management</li>
+        </ul>
+    </li>
+    </ul>
+</div>
+
+
+<div class="slide section" data-layout="clean">
+    <h1>More iteration</h1>
+</div>
+
+<div class="slide">
+    <h1>Iterables and iterators</h1>
+    <!--[[[cog
+    prompt_session("""\
+        nums = [1, 2, 3]
+        for num in nums:
+            print(num)
+
+        """)
+    ]]]-->
+    <pre class='python console'>
+    &gt;&gt;&gt; nums = [1, 2, 3]
+    &gt;&gt;&gt; for num in nums:
+    ...     print(num)
+    ... 
+    1
+    2
+    3
+
+
+    </pre>
+    <!--[[[end]]]-->
+    <!--[[[cog
+    prompt_session("""\
+        num_iter = iter(nums)
+        next(num_iter)
+        next(num_iter)
+        next(num_iter)
+        """, prelude="nums=[1,2,3]")
+    ]]]-->
+    <pre class='python console'>
+    &gt;&gt;&gt; num_iter = iter(nums)
+    &gt;&gt;&gt; next(num_iter)
+    1
+    &gt;&gt;&gt; next(num_iter)
+    2
+    &gt;&gt;&gt; next(num_iter)
+    3
+
+
+    </pre>
+    <!--[[[end]]]-->
+</div>
+
+<div class="slide">
+    <h1>Generators</h1>
+    <ul>
+    <li class="incremental">Functions return one thing</li>
+    <li class="incremental">Generators yield many things</li>
+    </ul>
+    <!--[[[cog
+    prompt_session("""\
+        def countdown(num):
+            while num >= 0:
+                yield num
+                num -= 1
+
+        for n in countdown(3):
+            print(n)
+
+        """)
+    ]]]-->
+    <pre class='python console'>
+    &gt;&gt;&gt; def countdown(num):
+    ...     while num &gt;= 0:
+    ...         yield num
+    ...         num -= 1
+    ... 
+    &gt;&gt;&gt; for n in countdown(3):
+    ...     print(n)
+    ... 
+    3
+    2
+    1
+    0
+
+
+    </pre>
+    <!--[[[end]]]-->
+</div>
+
+<div class="slide">
+    <h1>Iterating hashes directly</h1>
+    <!--[[[cog include_file_default(fname="peekable.py")   ]]] {{{ -->
+    <!--[[[end]]] }}} -->
+    <!--[[[cog include_file(start_from="def hashes_2017", end_at="dff5311")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>peekable.py</div>
+    <pre class='python'>
+    def hashes_2017(salt):
+        for i in itertools.count():
+            yield salted_hash_2017(salt, i)
+
+    def test_hashes_2017():
+        them = hashes_2017("abc")
+        assert next(them) == 'a107ff634856bb300138cac6568c0f24'
+        assert next(them) == '65490b7e1ceeff8ade55d803c02bf553'
+        assert next(them) == 'dff53117a11213b0e5c4cf63fe3c5198'
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+</div>
+
+
+<div class="slide">
+    <h1>Main iteration plus peeking ahead</h1>
+    <pre class="clear python">
+    md5('foo0') &rarr; a1b2c3d4
+    md5('foo1') &rarr; 9a8b7c6d
+    md5('foo2') &rarr; ff0ee1dd
+    md5('foo3') &rarr; a1<u>bbb</u>3d4     # Triple b!
+                               md5('foo4') &rarr; 987abc65
+                               md5('foo5') &rarr; a32cac67
+                               md5('foo6') &rarr; 4e60f111
+                               ...
+                               md5('foo241') &rarr; 3a<u><b>bbbbb</b></u>0
+                               # 3 is a key!
+    md5('foo4') &rarr; 987abc65
+    md5('foo5') &rarr; a32cac67
+    md5('foo6') &rarr; 4e60f<u>111</u>     # Triple 1!
+                               md5('foo7') &rarr; c1bd8e78
+                               ...
+    </pre>
+</div>
+
+<div class="slide">
+    <h1>Peekability</h1>
+    <!--[[[cog include_file(start_from="def test_peekable", end_at="== 3")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>peekable.py</div>
+    <pre class='python'>
+    def test_peekable():
+        p = PeekableIterable(itertools.count())
+        pi = iter(p)
+
+        assert next(pi) == 0
+        assert next(pi) == 1
+        assert p.peek_ahead(1) == 2
+        assert p.peek_ahead(100) == 101
+
+        assert next(pi) == 2
+        assert p.peek_ahead(1) == 3
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+</div>
+
+<div class="slide">
+    <!--[[[cog include_file(start_from="class Peekable", end_at="return self.lookahead")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>peekable.py</div>
+    <pre class='python'>
+    class PeekableIterable:
+        """Peek ahead into infinite iterables"""
+        def __init__(self, source):
+            self.source = iter(source)
+            self.lookahead = collections.deque()
+
+        def __iter__(self):
+            while True:
+                if self.lookahead:
+                    yield self.lookahead.popleft()
+                else:
+                    yield next(self.source)
+
+        def peek_ahead(self, index):
+            assert index &gt; 0
+            while index &gt; len(self.lookahead):
+                self.lookahead.append(next(self.source))
+            return self.lookahead[index-1]
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+</div>
+
+<div class="slide">
+    <h1>Iterating keys</h1>
+    <!--[[[cog include_file(start_from="def key_indexes", end_at="assert next")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>peekable.py</div>
+    <pre class='python'>
+    def key_indexes(salt):
+        p = PeekableIterable(hashes_2017(salt))
+        for index, hash in enumerate(p):
+            t = triple(hash)
+            if t:
+                for i in range(1, 1001):
+                    ahead = p.peek_ahead(i)
+                    if t*5 in ahead:
+                        yield index
+
+    def test_key_indexes():
+        ki = key_indexes("abc")
+        assert next(ki) == 10
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+</div>
+
+
+<div class="slide">
+    <h1>Finishing part 2</h1>
+    <!--[[[cog include_file(start_from="def n_keys", end_at="print")   ]]] {{{ -->
+    <div>
+    <div class='prelabel'>peekable.py</div>
+    <pre class='python'>
+    def n_keys(salt, n):
+        all_keys = key_indexes(salt)
+        return list(itertools.islice(all_keys, n))
+
+    if __name__ == "__main__":
+        INPUT = 'zpqevtbw'  # Yours will be different!
+        first_64 = n_keys(INPUT, 64)
+        k64 = first_64[-1]
+        print(f"Part 2: the 64th key is at index {k64}")
+    </pre>
+    </div>
+    <!--[[[end]]] }}} -->
+</div>
+
+
 
 <div class="slide" data-layout="clean">
     <img src="tree_2015.png" class="fullheight"/>
