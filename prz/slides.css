@@ -163,8 +163,12 @@ img.icon {
     background: #cfc;
 }
 
-.slide pre.pycon {
+.slide pre.python.console {
     background: #cee;
+}
+
+.slide pre.python.console .meta {
+    color: #666;
 }
 
 .slide pre .attn {

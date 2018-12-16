@@ -147,10 +147,10 @@ def include_code(text, lang=None, number=False, firstline=1, show_text=False, hi
         return
 
     result = []
+    class_attr = lang
     if classes:
-        classes += " "
-    classes += lang
-    result.append("<pre class='{}'>".format(classes))
+        class_attr += " " + classes
+    result.append("<pre class='{}'>".format(class_attr))
     result.append(quote_html(text))
     result.append("</pre>")
     cog.outl("\n".join(result))
@@ -161,4 +161,4 @@ def prompt_session(input, command=False, prelude=""):
     if command:
         output += "$ python\n"
     output += cagedprompt.prompt_session(input, banner=command, prelude=prelude)
-    include_code(output, lang="pycon", number=False)
+    include_code(output, lang="python", number=False, classes="console")
