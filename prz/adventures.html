@@ -13,7 +13,7 @@ import cog
 from cogutil import *
 include_file_default(show_label=True, indir="..")
 ]]]-->
-<!--[[[end]]]-->
+<!--[[[end]]] (checksum: d41d8cd98f00b204e9800998ecf8427e)-->
 <head>
 <title>Adventures</title>
 <meta charset="utf-8" />
@@ -166,7 +166,7 @@ include_file_default(show_label=True, indir="..")
 <div class="slide">
     <h1>Hashing</h1>
     <!--[[[cog include_file_default(fname="part1.py")   ]]] {{{ -->
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: d41d8cd98f00b204e9800998ecf8427e) }}} -->
     <!--[[[cog include_file(start_from="def salted_hash", end_at="return")   ]]] {{{ -->
     <div>
     <div class='prelabel'>part1.py</div>
@@ -176,7 +176,7 @@ include_file_default(show_label=True, indir="..")
         return hashlib.md5(bytes).hexdigest()
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 5c755fc620af13ed1d2819ec618745f4) }}} -->
     <div class="incremental">
     <!--[[[cog
     prompt_session("""\
@@ -192,7 +192,7 @@ include_file_default(show_label=True, indir="..")
 
 
     </pre>
-    <!--[[[end]]]-->
+    <!--[[[end]]] (checksum: d07fbf6fa0f173bba2b9189039ad1774)-->
     </div>
 </div>
 
@@ -209,7 +209,7 @@ include_file_default(show_label=True, indir="..")
             return m.group(1)
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: a156140e418e1d0f2372303dfb3fe068) }}} -->
     <div class="incremental">
     <!--[[[cog
     prompt_session("""\
@@ -230,7 +230,7 @@ include_file_default(show_label=True, indir="..")
 
 
     </pre>
-    <!--[[[end]]]-->
+    <!--[[[end]]] (checksum: a9d26a58725d9cf5cd57114354c2914c)-->
     </div>
 </div>
 
@@ -256,7 +256,7 @@ include_file_default(show_label=True, indir="..")
         return False
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 759253299f2d4a927576a522ac5764d2) }}} -->
 </div>
 
 <div class="slide">
@@ -275,7 +275,7 @@ include_file_default(show_label=True, indir="..")
                     return candidate
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: da5846fdb135ac8cfc4c891564da2d44) }}} -->
 </div>
 
 <div class="slide">
@@ -289,7 +289,7 @@ include_file_default(show_label=True, indir="..")
     print(f"Part 1: the 64th key is at index {k64}")
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: df13429c29272f5172a462c365522b79) }}} -->
     <pre class="plaintext incremental">
     $ python part1.py
     Part 1: the 64th key is at index 16106
@@ -310,7 +310,7 @@ include_file_default(show_label=True, indir="..")
         assert triple("helloaaathere") == "a"
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: eea9b771c2164c51c92ee3d73efc785a) }}} -->
     <pre class="plaintext incremental">
     $ pytest part1.py
     ================ test session starts ==================
@@ -339,7 +339,7 @@ include_file_default(show_label=True, indir="..")
         assert triple(s) == t
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 910c9aea6f262d36a148786c2116eb0f) }}} -->
     <pre class="plaintext incremental medium">
     $ pytest part1.py
     ================= test session starts =================
@@ -376,7 +376,7 @@ include_file_default(show_label=True, indir="..")
         assert is_key(salt, num) == result
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: ab3bcb516c7d73e5f7cf580ef622cec6) }}} -->
     <!--[[[cog include_file(start_from='def test_nth_key', end_at="assert")   ]]] {{{ -->
     <div>
     <div class='prelabel'>part1.py</div>
@@ -385,7 +385,7 @@ include_file_default(show_label=True, indir="..")
         assert nth_key("abc", 64) == 22728
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 6d7956a580a7fd93be35d9d7b7a9e227) }}} -->
     <pre class="plaintext incremental medium">
     collected 12 items
 
@@ -462,7 +462,7 @@ include_file_default(show_label=True, indir="..")
         return val
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: f136612d60c5ae3d3395b30a37f1cb6b) }}} -->
     <pre class="plaintext incremental">
     $ time python naive_part2.py
     Part 2: the 64th key is at index 22423
@@ -490,7 +490,7 @@ include_file_default(show_label=True, indir="..")
         return hashlib.md5(bytes).hexdigest()
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 88e5e97516a1d80049286aecd544095b) }}} -->
     </div>
     <pre class="plaintext incremental">
     $ python part1_counted.py
@@ -526,7 +526,7 @@ include_file_default(show_label=True, indir="..")
         return val
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 37fb7950970a35179d2238ddd05f6bd4) }}} -->
     <pre class="plaintext incremental">
     $ time python gcache.py
     Part 2: the 64th key is at index 22423
@@ -558,7 +558,7 @@ include_file_default(show_label=True, indir="..")
     salted_hash_2017 = make_cached_hasher(2017)
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 5c8fb3878b097dcc112bd417698cd028) }}} -->
 </div>
 
 <div class="slide">
@@ -585,7 +585,7 @@ include_file_default(show_label=True, indir="..")
         return val
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 1ee8b0f3c82dee6ed544d0687fd87dc2) }}} -->
 </div>
 
 <div class="slide">
@@ -632,7 +632,7 @@ include_file_default(show_label=True, indir="..")
 
 
     </pre>
-    <!--[[[end]]]-->
+    <!--[[[end]]] (checksum: d20cfd63526e32567946cb2800c8f781)-->
     <!--[[[cog
     prompt_session("""\
         num_iter = iter(nums)
@@ -652,7 +652,7 @@ include_file_default(show_label=True, indir="..")
 
 
     </pre>
-    <!--[[[end]]]-->
+    <!--[[[end]]] (checksum: 068f1d80b2bd40cb4d98589522a6ed3f)-->
 </div>
 
 <div class="slide">
@@ -689,13 +689,13 @@ include_file_default(show_label=True, indir="..")
 
 
     </pre>
-    <!--[[[end]]]-->
+    <!--[[[end]]] (checksum: 0e324b07f85875f86e617c4083c8474e)-->
 </div>
 
 <div class="slide">
     <h1>Iterating hashes directly</h1>
     <!--[[[cog include_file_default(fname="peekable.py")   ]]] {{{ -->
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: d41d8cd98f00b204e9800998ecf8427e) }}} -->
     <!--[[[cog include_file(start_from="def hashes_2017", end_at="dff5311")   ]]] {{{ -->
     <div>
     <div class='prelabel'>peekable.py</div>
@@ -711,7 +711,7 @@ include_file_default(show_label=True, indir="..")
         assert next(them) == 'dff53117a11213b0e5c4cf63fe3c5198'
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: b45086572cc17d4b7403d54965b894f4) }}} -->
 </div>
 
 
@@ -755,7 +755,7 @@ include_file_default(show_label=True, indir="..")
         assert p.peek_ahead(1) == 3
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 03ea662df100f7c9155daeedb00c1992) }}} -->
 </div>
 
 <div class="slide">
@@ -783,7 +783,7 @@ include_file_default(show_label=True, indir="..")
             return self.lookahead[index-1]
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 3da33cccd06ff9001e56624d7ef26001) }}} -->
 </div>
 
 <div class="slide">
@@ -807,7 +807,7 @@ include_file_default(show_label=True, indir="..")
         assert next(ki) == 10
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 7805806a12f7609e508785e1f0ec84e8) }}} -->
 </div>
 
 
@@ -828,7 +828,7 @@ include_file_default(show_label=True, indir="..")
         print(f"Part 2: the 64th key is at index {k64}")
     </pre>
     </div>
-    <!--[[[end]]] }}} -->
+    <!--[[[end]]] (checksum: 443a35c97268eefd5a4140aac8e57b3a) }}} -->
 </div>
 
 
