@@ -34,14 +34,14 @@ a.eval {
 }
 
 /** Overview screen */
-.overview .slide {
-    -moz-border-radius: 2em;
-    -webkit-border-radius: 2em;
-    border-radius: 2em;
-    border: 0.5em solid #ccc;
+.overviewWrapper {
+    -moz-border-radius: .25em;
+    -webkit-border-radius: .25em;
+    border-radius: .25em;
+    border: 1px solid #ccc;
 }
-.overview .slide.active {
-    border: 0.5em solid #888;
+.overviewWrapper.active {
+    border: 1px solid #888;
 }
 .overviewWrapper:hover {
     position: relative;
