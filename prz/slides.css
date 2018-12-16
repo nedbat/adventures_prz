@@ -294,3 +294,10 @@ sup {
     font-size: 75%;
     vertical-align: super;
 }
+
+.overviewWrapper {
+    border: 1px solid #000;
+}
+.overviewWrapper.active {
+    border: 1px solid #fff;
+}
