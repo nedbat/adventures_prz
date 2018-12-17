@@ -75,6 +75,7 @@ def test_peekable():
     assert p.peek_ahead(1) == 3
 
 def key_indexes(salt):
+    """Produce all key indexes from `salt`."""
     p = PeekableIterable(hashes_2017(salt))
     for index, hash in enumerate(p):
         t = triple(hash)

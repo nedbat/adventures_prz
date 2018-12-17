@@ -742,9 +742,9 @@ include_file_default(show_label=True, indir="..")
                                md5('foo4') &rarr; 987abc65
                                md5('foo5') &rarr; a32cac67
                                md5('foo6') &rarr; 4e60f111
+                               md5('foo7') &rarr; c1bd8e78
+                               md5('foo8') &rarr; b2b9a2e9
                                ...
-                               md5('foo241') &rarr; 3a<u><b>bbbbb</b></u>0
-                               # 3 is a key!
     md5('foo4') &rarr; 987abc65
     md5('foo5') &rarr; a32cac67
     md5('foo6') &rarr; 4e60f<u>111</u>     # Triple 1!
@@ -810,6 +810,7 @@ include_file_default(show_label=True, indir="..")
     <div class='prelabel'>peekable.py</div>
     <pre class='python'>
     def key_indexes(salt):
+        """Produce all key indexes from `salt`."""
         p = PeekableIterable(hashes_2017(salt))
         for index, hash in enumerate(p):
             t = triple(hash)
@@ -824,7 +825,7 @@ include_file_default(show_label=True, indir="..")
         assert next(ki) == 10
     </pre>
     </div>
-    <!--[[[end]]] (checksum: 7805806a12f7609e508785e1f0ec84e8) }}} -->
+    <!--[[[end]]] (checksum: 2992c4a4d3ee57364447a73e4159cd0a) }}} -->
 </div>
 
 
