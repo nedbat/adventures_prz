@@ -214,9 +214,8 @@ include_file_default(show_label=True, indir="..")
     <pre class='python console'>
     &gt;&gt;&gt; salted_hash("something", 17)
     '594a263646d6b3c5db804b28f62cbc67'
-
     </pre>
-    <!--[[[end]]] (checksum: 97a73de743f76c6500f0a087a698a2dd)-->
+    <!--[[[end]]] (checksum: 1a00d6333e883a2a42be89b9ddbce5f6)-->
     </div>
 </div>
 
@@ -251,9 +250,8 @@ include_file_default(show_label=True, indir="..")
     &gt;&gt;&gt; triple("hello world")
     &gt;&gt;&gt; triple("111 22222 333")
     '1'
-
     </pre>
-    <!--[[[end]]] (checksum: 37eea48e4bdaa6204cd7966b1814c369)-->
+    <!--[[[end]]] (checksum: fe7fcc435f3b77a45705df4e775dcd92)-->
     </div>
 </div>
 
@@ -648,13 +646,12 @@ include_file_default(show_label=True, indir="..")
     &gt;&gt;&gt; nums = [1, 2, 3]
     &gt;&gt;&gt; for num in nums:
     ...     print(num)
-    ...
+
     1
     2
     3
-
     </pre>
-    <!--[[[end]]] (checksum: f7796bd2f3b9096884147978b6127057)-->
+    <!--[[[end]]] (checksum: c154d022d93f6ac30993f4b27b59f228)-->
     <!--[[[cog
     prompt_session("""\
         num_iter = iter(nums)
@@ -671,9 +668,8 @@ include_file_default(show_label=True, indir="..")
     2
     &gt;&gt;&gt; next(num_iter)
     3
-
     </pre>
-    <!--[[[end]]] (checksum: b9b949a6cf6e31a6fe8a7a87ddb4ff08)-->
+    <!--[[[end]]] (checksum: c3564b0e900a934d6bc64290a78e92a6)-->
 </div>
 
 <div class="slide">
@@ -682,6 +678,7 @@ include_file_default(show_label=True, indir="..")
     <li class="incremental">Functions return one thing</li>
     <li class="incremental">Generators yield many things</li>
     </ul>
+    <div class='incremental'>
     <!--[[[cog
     prompt_session("""\
         def countdown(num):
@@ -699,17 +696,17 @@ include_file_default(show_label=True, indir="..")
     ...     while num &gt;= 0:
     ...         yield num
     ...         num -= 1
-    ...
+
     &gt;&gt;&gt; for n in countdown(3):
     ...     print(n)
-    ...
+
     3
     2
     1
     0
-
     </pre>
-    <!--[[[end]]] (checksum: 045bfa6b30b53be58e234332d330a7bd)-->
+    <!--[[[end]]] (checksum: 9f10336bd9700e7a08fde97ff06e07b6)-->
+    </div>
 </div>
 
 <div class="slide">

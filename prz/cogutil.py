@@ -162,5 +162,8 @@ def prompt_session(input, command=False, prelude=""):
     output = ""
     if command:
         output += "$ python\n"
-    output += cagedprompt.prompt_session(input, banner=command, prelude=prelude)
+    repl_out = cagedprompt.prompt_session(input, banner=command, prelude=prelude)
+    # REPL sessions have lone triple-dot lines. Suppress them.
+    repl_out = "\n".join('' if l == '... ' else l for l in repl_out.splitlines())
+    output += repl_out
     include_code(output, lang="python", number=False, classes="console")
